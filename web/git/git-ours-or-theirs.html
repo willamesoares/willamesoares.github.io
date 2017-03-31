@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Git: Ours or Theirs? (Part 1) &mdash; </title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta property="og:url" content="http://willamesoares.github.io/git/git-ours-or-theirs.html">
+    <meta property="og:site_name" content="blog.your-domain.com">
+
+    
+    <meta property="og:title" content="Git: Ours or Theirs? (Part 1)">
+    
+
+    
+    <meta name="description" content="Tips for resolving conflicts automatically">
+    <meta name="og:description" content="Tips for resolving conflicts automatically">
+    
+
+    
+    <meta property="og:image" content="">
+    
+
+    
+
+    
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2017-03-31">
+    
+
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+  </head>
+
+  <body>
+
+    
+
+    <header class="">
+      <div class="header">
+        <nav class="navbar navbar-default navbar-static-top">
+          <div class="container home__nav">
+            <div class="navbar-header home__nav__content">
+              
+              <a class="navbar-brand header__title" href="/">Will Soares</a>
+              
+
+            </div>
+            <!-- /.navbar-header  -->
+          </div>
+          <!-- /.container -->
+        </nav>
+        <!-- /.navbar navbar-default navbar-static-top -->
+      </header>
+      <!-- /.header -->
+
+      <main class="container">
+
+        <article>
+    <header>
+        <h1>Git: Ours or Theirs? (Part 1)</h1>
+        <div class="post-info">
+            <div class="author-published">
+                by Will Soares
+            </div>
+            <div class="date-published">
+                <time datetime="2017-03-31 00:00:00 +0000">March 31, 2017</time>
+            </div>
+        </div>
+    </header>
+
+    <div><div class="center-align">
+  <img class="responsive-img" src="https://cdn-images-1.medium.com/max/800/1*8oIC-d4z4EwJnOUPJuh_5A.png" />
+</div>
+
+<p>In this article, I will assume that you already have a basic understanding of Git and consequently is familiar with the process of sharing code when you are working in a team. If you do not know about that, I would suggest you to read more about those topics <a href="https://backlogtool.com/git-guide/en/">here</a> and <a href="https://blog.codeminer42.com/git-workflow-basics-d405746f6205">here</a> before going through this post.</p>
+
+<p>If you are here on purpose, you probably know that this article relates to a really cumbersome situation that you constantly get into when trying to share your code with coworkers, who are working in the same repository. We all know that those situations, known as conflicts, may become a lot harder or time-consuming depending on the number of changes we are trying to commit.</p>
+
+<p>As a beginner developer, I’m constantly wondering about things I could automate to increase my productivity at work. Due to that — and also because I once got a bunch of conflicts in a file — I came up with the topic for this post. So without further ado, let’s get into it.</p>
+
+<p>To begin with, let’s imagine you have to work on a new feature that you are really excited about. Thus you go ahead and create a new branch for it.</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="o">(</span>old-feature<span class="o">)</span> git checkout -b my-new-feature
+</code></pre>
+</div>
+
+<p>After making all the changes you needed to accomplish your task, let’s say you now need to merge the old branch, from which you have created the <code class="highlighter-rouge">my-new-feature</code> branch, into the current one. However, before attempting to do that you notice there are new commits on that branch and the git graph now looks like this:</p>
+
+<div class="center-align">
+  <img class="responsive-img" src="https://cdn-images-1.medium.com/max/800/1*zORfgMIo9clAqpFh8IyRqg.png" />
+</div>
+
+<p>Even though you noticed that, you think those changes on the old branch will not affect yours, so the merge command is executed within the <code class="highlighter-rouge">my-new-feature</code> branch.</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="o">(</span>my-new-feature<span class="o">)</span> git merge old-feature
+</code></pre>
+</div>
+
+<p>And the output is:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>Auto-merging index.html
+CONFLICT <span class="o">(</span>content<span class="o">)</span>: Merge conflict <span class="k">in </span>index.html
+Automatic merge failed; fix conflicts and <span class="k">then </span>commit the result.
+</code></pre>
+</div>
+
+<p>Too bad! You’ve just got some conflicts that you should manually solve in the <code class="highlighter-rouge">index.html</code> file. But wait… the file is huge and there are tons of conflicts in it. You probably will take a long time to handle all of them if you do it one at a time.</p>
+
+<p>So how can we automate that? Here we are presented with two really handy options Git provides us: <code class="highlighter-rouge">ours</code> and <code class="highlighter-rouge">theirs</code> . The first option represents the current branch from which you executed the command before getting the conflicts, and the second option refers to the branch where the changes are coming from. So in the situation described above the <code class="highlighter-rouge">my-new-feature</code> branch would be <code class="highlighter-rouge">ours</code> and the <code class="highlighter-rouge">old-feature</code> branch would be <code class="highlighter-rouge">theirs</code>.</p>
+
+<div class="center-align">
+  <img class="responsive-img" src="https://cdn-images-1.medium.com/max/800/1*_OtZLrRG59_aGmbwTQPBUA.png" />
+</div>
+
+<p>In order to better understand when you would want to use any of those options, let’s imagine that you opened the <code class="highlighter-rouge">index.html</code> file and you noticed that all the changes coming from the <code class="highlighter-rouge">old-feature</code> branch are not correct and you can simply ignore them. With that, you want to keep only the changes from your branch, which are referred to by the <code class="highlighter-rouge">ours</code> option. So instead of handling them one line at a time you can simply run the command below.</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="o">(</span>my-new-feature<span class="o">)</span> git checkout --ours index.html
+</code></pre>
+</div>
+
+<p>After that, you just need to explicitly tell Git that you solved the conflicts in that file by adding it to the Index, as shown in the command below.</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="o">(</span>my-new-feature<span class="o">)</span> git add index.html
+</code></pre>
+</div>
+
+<p>Similarly, if you would want to keep all the changes coming from the <code class="highlighter-rouge">old-feature</code> branch and ignore your changes, you would just have to use the option <code class="highlighter-rouge">theirs</code> instead (in situations like the one described above, of course).</p>
+
+<p>After the merge process is successfully finished we would have a branches graph like this:</p>
+
+<div class="center-align">
+  <img class="responsive-img" src="https://cdn-images-1.medium.com/max/800/1*SrgDOVkBwLX3haHzJ7so1w.png" />
+</div>
+
+<p>With that you have used a strategy to resolve conflicts that may happen when doing a <code class="highlighter-rouge">git merge</code>. This allows you to save a considerable amount of time when you face problems like this.</p>
+
+<p>It is important to notice that you must be careful when resolving conflicts this way. One must be sure about which changes should be kept and which ones should be ignored before doing it automatically. Besides, those options can be a little bit tricky in different situations. The one described here is specific to a merge process and should not be mistaken for cases when you are doing a rebase , for instance. But that is going to be discussed later in another post. Stay tuned!</p>
+
+<p>…</p>
+
+<p>In the meantime, if you want to learn more about the options and the other commands discussed you can take a look <a href="https://git-scm.com/book/tr/v2/Git-Tools-Advanced-Merging">here</a>.</p>
+
+<p>If you have any questions or comments, let me know!</p>
+
+<p>Thanks a bunch for reading!</p>
+</div>
+
+</article>
+
+
+      </main>
+
+      <footer class="footer page-footer">
+          <div class="footer-copyright">
+            <div class="container">
+              <div class="">
+                <small>
+                  © 2017 Will Soares All rights reserved
+                </small>
+              </div>
+            </div>
+            <!-- /.container -->
+          </div>
+          <!-- /.footer-copyright -->
+        </footer>
+    </div>
+    <!-- /.home -->
+  </body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% if page.title %}{{ page.title }} &mdash; {% endif %}</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta property="og:url" content="{{ site.url }}{{ page.url | remove_first:'index.html' }}">
+    <meta property="og:site_name" content="blog.your-domain.com">
+
+    {% if page.title %}
+    <meta property="og:title" content="{{ page.title }}">
+    {% endif %}
+
+    {% if page.description %}
+    <meta name="description" content="{{ page.description }}">
+    <meta name="og:description" content="{{ page.description }}">
+    {% else if page.excerpt %}
+    <meta name="description" content="{{ page.excerpt | strip_html | truncatewords: 25 }}">
+    <meta name="og:description" content="{{ page.excerpt | strip_html | truncatewords: 25 }}">
+    {% endif %}
+
+    {% if page.og_image_url %}
+    <meta property="og:image" content="{{ page.og_image_url }}">
+    {% else if page.photo_url %}
+    <meta property="og:image" content="{{ page.photo_url }}">
+    {% endif %}
+
+    {% if page.keywords %}
+    <meta name="keywords" content="{{ page.keywords | join: ', ' }}" />
+    {% endif %}
+
+    {% if page.date %}
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="{{ page.date | date: "%Y-%m-%d" }}">
+    {% endif %}
+
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+  </head>
+
+  <body>
+
+    {% if page.url == "/" %}
+      {% assign homepage = true %}
+      {% assign homeClass = "home" %}
+    {% endif %}
+
+    <header class="{{ homeClass }}">
+      <div class="header">
+        <nav class="navbar navbar-default navbar-static-top">
+          <div class="container home__nav">
+            <div class="navbar-header home__nav__content">
+              {% if homepage %}
+              <img class="home__img" src="/images/profile.jpg">
+              <a class="navbar-brand home__brand" href="/">Welcome to my portfolio!</a>
+              <p class="home__brand__description">Follow me on social network!</p>
+              <div class="home__social-icons">
+                <a href="https://www.facebook.com/wilamesoares"><img src="/images/social/fb-logo.svg" alt="Facebook"></a>
+                <a href="https://twitter.com/Willame_soares"><img src="/images/social/twitter-logo.svg" alt="Twitter"></a>
+                <a href="https://github.com/willamesoares"><img src="/images/social/gh-logo.svg" alt="Github"></a>
+                <a href="https://plus.google.com/u/0/+WillSoares-bthe"><img src="/images/social/google-logo.svg" alt="Google Plus"></a>
+              </div>
+              {% else %}
+              <a class="navbar-brand header__title" href="/">Will Soares</a>
+              {% endif %}
+
+            </div>
+            <!-- /.navbar-header  -->
+          </div>
+          <!-- /.container -->
+        </nav>
+        <!-- /.navbar navbar-default navbar-static-top -->
+      </header>
+      <!-- /.header -->
+
+      <main class="container">
+
+        {{ content }}
+
+      </main>
+
+      <footer class="footer page-footer">
+          <div class="footer-copyright">
+            <div class="container">
+              <div class="">
+                <small>
+                  © 2017 Will Soares All rights reserved
+                </small>
+              </div>
+            </div>
+            <!-- /.container -->
+          </div>
+          <!-- /.footer-copyright -->
+        </footer>
+    </div>
+    <!-- /.home -->
+  </body>
+</html>

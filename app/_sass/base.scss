@@ -1,0 +1,18 @@
+body {
+  display: flex;
+  font-size: 16px;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+nav {
+  background-color: $primary-color;
+
+  a, p {
+    color: $secondary-color;
+  }
+}

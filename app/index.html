@@ -1,0 +1,16 @@
+---
+layout: default
+description: Welcome to my portfolio!
+---
+
+<h3>Recent Posts</h3>
+{% for post in site.posts limit:50 %}
+<h4><a href="{{ post.url }}">{{ post.title }}</a></h4>
+<div class="preview">
+    {% if post.description %}
+    <span class="body">{{ post.description | strip_html | truncatewords: 300 }}</span>
+    {% else %}
+    <span class="body">{{ post.excerpt | strip_html }}</span>
+    {% endif %}
+</div>
+{% endfor %}

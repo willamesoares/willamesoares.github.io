@@ -1,0 +1,26 @@
+$breakpoint-mobile: 420px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 992px;
+$breakpoint-desktop-lg: 1200px;
+
+@mixin breakpoint($class) {
+  @if $class == xs {
+    @media (max-width: $breakpoint-mobile) { @content; }
+  }
+
+  @else if $class == sm {
+    @media (min-width: $breakpoint-tablet) { @content; }
+  }
+
+  @else if $class == md {
+    @media (min-width: $breakpoint-desktop) { @content; }
+  }
+
+  @else if $class == lg {
+    @media (min-width: $breakpoint-desktop-lg) { @content; }
+  }
+
+  @else {
+    @warn "Breakpoint mixin supports: xs, sm, md, lg";
+  }
+}
