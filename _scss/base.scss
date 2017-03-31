@@ -12,7 +12,12 @@ main {
 nav {
   background-color: $primary-color;
 
-  a, p {
+  a, p, span {
     color: $secondary-color;
   }
+}
+
+article {
+  margin-top: 4em;
+  margin-bottom: 4em;
 }

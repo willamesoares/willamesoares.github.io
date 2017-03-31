@@ -7,11 +7,11 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{% if page.title %}{{ page.title }} &mdash; {% endif %}</title>
+    <title>{% if page.title %}{{ page.title }}{% else %} @willamesoares {% endif %}</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta property="og:url" content="{{ site.url }}{{ page.url | remove_first:'index.html' }}">
-    <meta property="og:site_name" content="blog.your-domain.com">
+    <meta property="og:site_name" content="Will Soares">
 
     {% if page.title %}
     <meta property="og:title" content="{{ page.title }}">
@@ -58,8 +58,8 @@
             <div class="navbar-header home__nav__content">
               {% if homepage %}
               <img class="home__img" src="/images/profile.jpg">
-              <a class="navbar-brand home__brand" href="/">Welcome to my portfolio!</a>
-              <p class="home__brand__description">Follow me on social network!</p>
+              <a class="navbar-brand home__brand" href="/">Will Soares</a>
+              <span class="home__brand__description">Front-end Developer</span>
               <div class="home__social-icons">
                 <a href="https://www.facebook.com/wilamesoares"><img src="/images/social/fb-logo.svg" alt="Facebook"></a>
                 <a href="https://twitter.com/Willame_soares"><img src="/images/social/twitter-logo.svg" alt="Twitter"></a>
@@ -67,7 +67,7 @@
                 <a href="https://plus.google.com/u/0/+WillSoares-bthe"><img src="/images/social/google-logo.svg" alt="Google Plus"></a>
               </div>
               {% else %}
-              <a class="navbar-brand header__title" href="/">Will Soares</a>
+              <a class="navbar-brand" href="/"><img class="home__img home__img--small" src="/images/profile.jpg"></a>
               {% endif %}
 
             </div>
