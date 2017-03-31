@@ -1,2 +1,4 @@
-# willamesoares.github.io
-http://willamesoares.github.io
+# Personal blog
+
+Available at http://willamesoares.github.io
+Powered by Jekyll
