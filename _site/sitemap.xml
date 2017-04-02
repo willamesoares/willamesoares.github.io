@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>http://0.0.0.0:4000/off-topic/procuram-se-culpados.html</loc>
+<loc>http://willamesoares.github.io/off-topic/procuram-se-culpados.html</loc>
 <lastmod>2016-05-02T00:00:00+00:00</lastmod>
 </url>
 <url>
-<loc>http://0.0.0.0:4000/git/git-ours-or-theirs.html</loc>
+<loc>http://willamesoares.github.io/git/git-ours-or-theirs.html</loc>
 <lastmod>2017-03-31T00:00:00+00:00</lastmod>
 </url>
 <url>
-<loc>http://0.0.0.0:4000/</loc>
+<loc>http://willamesoares.github.io/</loc>
 </url>
 </urlset>
