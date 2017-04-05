@@ -1,15 +1,15 @@
 ---
 layout:      post
-title:       "Git: Ours or Theirs?"
+title:       "Git: Ours or Theirs? (part 1)"
 author:      "Will Soares"
 date:        2017-03-31
 categories:  git
 description: "Tips for resolving conflicts automatically"
-image:       "https://cdn-images-1.medium.com/max/800/1*8oIC-d4z4EwJnOUPJuh_5A.png"
+image:       "/images/posts/git/part1/lickedit.png"
 ---
 
 <div class="center-align">
-  <img class="responsive-img" src="https://cdn-images-1.medium.com/max/800/1*8oIC-d4z4EwJnOUPJuh_5A.png">
+  <img class="responsive-img" src="/images/posts/git/part1/lickedit.png">
 </div>
 
 In this article, I will assume that you already have a basic understanding of Git and consequently is familiar with the process of sharing code when you are working in a team. If you do not know about that, I would suggest you to read more about those topics [here](https://backlogtool.com/git-guide/en/) and [here](https://blog.codeminer42.com/git-workflow-basics-d405746f6205) before going through this post.  
@@ -27,7 +27,7 @@ $ (old-feature) git checkout -b my-new-feature
 After making all the changes you needed to accomplish your task, let’s say you now need to merge the old branch, from which you have created the `my-new-feature` branch, into the current one. However, before attempting to do that you notice there are new commits on that branch and the git graph now looks like this:
 
 <div class="center-align">
-  <img class="responsive-img" src="https://cdn-images-1.medium.com/max/800/1*zORfgMIo9clAqpFh8IyRqg.png">
+  <img class="responsive-img" src="/images/posts/git/part1/example1.png">
 </div>
 
 Even though you noticed that, you think those changes on the old branch will not affect yours, so the merge command is executed within the `my-new-feature` branch.
@@ -49,7 +49,7 @@ Too bad! You’ve just got some conflicts that you should manually solve in the 
 So how can we automate that? Here we are presented with two really handy options Git provides us: `ours` and `theirs` . The first option represents the current branch from which you executed the command before getting the conflicts, and the second option refers to the branch where the changes are coming from. So in the situation described above the `my-new-feature` branch would be `ours` and the `old-feature` branch would be `theirs`.
 
 <div class="center-align">
-  <img class="responsive-img" src="https://cdn-images-1.medium.com/max/800/1*_OtZLrRG59_aGmbwTQPBUA.png">
+  <img class="responsive-img" src="/images/posts/git/part1/example2.png">
 </div>
 
 In order to better understand when you would want to use any of those options, let’s imagine that you opened the `index.html` file and you noticed that all the changes coming from the `old-feature` branch are not correct and you can simply ignore them. With that, you want to keep only the changes from your branch, which are referred to by the `ours` option. So instead of handling them one line at a time you can simply run the command below.
@@ -69,7 +69,7 @@ Similarly, if you would want to keep all the changes coming from the `old-featur
 After the merge process is successfully finished we would have a branches graph like this:
 
 <div class="center-align">
-  <img class="responsive-img" src="https://cdn-images-1.medium.com/max/800/1*SrgDOVkBwLX3haHzJ7so1w.png">
+  <img class="responsive-img" src="/images/posts/git/part1/example3.png">
 </div>
 
 With that you have used a strategy to resolve conflicts that may happen when doing a `git merge`. This allows you to save a considerable amount of time when you face problems like this.

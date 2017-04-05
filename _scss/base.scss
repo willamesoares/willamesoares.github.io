@@ -20,4 +20,16 @@ nav {
 article {
   margin-top: 4em;
   margin-bottom: 4em;
+  text-align: justify;
+}
+
+code {
+  background-color: rgba(199, 198, 199, .3);
+  padding: .2em;
+}
+
+.container {
+  @media (min-width: 1440px) {
+    width: 50%;
+  }
 }
