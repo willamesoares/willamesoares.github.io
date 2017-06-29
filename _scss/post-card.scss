@@ -1,5 +1,9 @@
 .post-card {
 
+  &:hover {
+    box-shadow: .1rem .2rem .2rem 0 grey;
+  }
+
   &__img {
     max-height: 50% !important;
   }

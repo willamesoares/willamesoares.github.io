@@ -44,6 +44,13 @@
       width: 2em;
       height: 2em;
       margin: 0.4em;
+      transition-duration: .3s;
+      transition-property: all;
+      transition-timing-function: ease-in-out;
+
+      &:hover {
+        transform: perspective(40rem) translate3d(0, 0, 5rem);
+      }
     }
   }
 }
