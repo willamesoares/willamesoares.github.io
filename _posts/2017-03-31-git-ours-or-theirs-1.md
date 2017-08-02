@@ -1,11 +1,11 @@
 ---
 layout:      post
-title:       "Git: Ours or Theirs? (part&nbsp;1)"
-author:      "Will Soares"
+title:       Git: Ours or Theirs? (part&nbsp;1)
+author:      Will Soares
 date:        2017-03-31
 categories:  Git
-description: "Tips for resolving conflicts automatically"
-image:       "/images/posts/git/part1/lickedit.png"
+description: Tips for resolving conflicts automatically
+image:       /images/posts/git/part1/lickedit.png
 ---
 
 <div class="center-align">
