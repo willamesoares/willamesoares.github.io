@@ -1,6 +1,6 @@
 ---
 layout:      post
-title:       Git: Ours or Theirs? (part&nbsp;2)
+title:       "Git: Ours or Theirs? (part&nbsp;2)"
 author:      Will Soares
 date:        2017-04-05
 categories:  Git
