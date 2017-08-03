@@ -129,4 +129,10 @@ $ yarn run build
 
 If everything goes alright, then you are ready to start some D3 hacking. I hope you liked this post and if you have any commments or contribution, feel free to contact me or open a Pull Request.
 
+Finally, check out the example below so you can have a better idea of what I explained in this article.
+
 Have fun! :)
+
+<div class="align-center">
+  <img class="responsive-img" src="/images/posts/d3/d3example.gif">
+</div>
