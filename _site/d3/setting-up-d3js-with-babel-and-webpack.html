@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Setting Up D3.js with Babel and Webpack</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta property="og:url" content="http://willamesoares.github.io/d3/setting-up-d3js-with-babel-and-webpack.html">
+    <meta property="og:site_name" content="Will Soares">
+
+    
+    <meta property="og:title" content="Setting Up D3.js with Babel and Webpack">
+    
+
+    
+    <meta name="description" content="Learn how to setup D3 with webpack for live reloading">
+    <meta name="og:description" content="Learn how to setup D3 with webpack for live reloading">
+    
+
+    
+    <meta property="og:image" content="">
+    
+
+    
+
+    
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2017-08-02">
+    
+
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-96614926-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+  </head>
+
+  <body>
+
+    
+
+    <header class="">
+      <div class="header">
+        <nav class="navbar navbar-default navbar-static-top">
+          <div class="container home__nav">
+            <div class="navbar-header home__nav__content">
+              
+              <a class="navbar-brand" href="/"><img class="home__img home__img--small" src="/images/profile.jpg"></a>
+              
+
+            </div>
+            <!-- /.navbar-header  -->
+          </div>
+          <!-- /.container -->
+        </nav>
+        <!-- /.navbar navbar-default navbar-static-top -->
+      </header>
+      <!-- /.header -->
+
+      <main class="container">
+
+        <article>
+    <header>
+        <h3 class="left-align">Setting Up D3.js with Babel and Webpack</h3>
+        <div class="post-info">
+            <div class="author-published">
+                by Will Soares
+            </div>
+            <div class="date-published">
+                <time datetime="2017-08-02 00:00:00 +0000">August 02, 2017</time>
+            </div>
+        </div>
+    </header>
+
+    <div><div class="center-align">
+  <img class="responsive-img" src="/images/posts/d3/d3logo.png" />
+</div>
+
+<p>Hello there! This is a post I decided to write when I found myself looking for a basic setup in order to start learning <a href="https://d3js.org/">D3.js</a>. Yeah, I know, you don’t have to configure a npm package just to start playing with D3. At its simplest, you can go to <a href="http://blockbuilder.org/">blockbuilder.org</a> and edit the provided boilerplate code to see things working. Likewise, you can simply create an <code class="highlighter-rouge">index.html</code> file, add the <a href="https://cdnjs.com/libraries/d3">D3 CDN</a>, and include a script where you have written some D3 code. Those are really great alternatives if you are just trying to create some drafts and see how D3 works. However, when we want to create a well structured project where we have to use D3 and handle external data source, for instance, it is good to start with something we can easily scale.</p>
+
+<p>In fact, what truly pushed me to going for this setup was that I find it really tedious to have to open the browser and manually reload the page every time I want to see how things changed. Now, if you think about working with D3 where you are basically dealing with visual stuff as an output, can you understand how good it is to have live reloading available?</p>
+
+<h4 id="concepts-behind-this-setup">Concepts behind this setup</h4>
+
+<p>Enough motivational talk, let’s get into some details and concepts for this project setup. You can take a look at its <a href="https://github.com/willamesoares/learn-d3">Github repository</a> and check the files as you read.</p>
+
+<h5 id="d3js">D3.js</h5>
+<p>As you may know, D3.js is a JavaScript library that uses HTML, SVG, and CSS to create visualization sets for data driven documents. You can see some amazing data visualizations created with D3 in their <a href="https://github.com/d3/d3/wiki/Gallery">gallery</a>.</p>
+
+<h5 id="webpack-and-webpack-dev-server">Webpack and webpack-dev-server</h5>
+<p>In order to provide you with a myriad of options to scale your project, this setup comes with a basic <a href="https://webpack.js.org/">Webpack</a> configuration file, which you can customize as you need.<br />
+As for the live reloading option, this setup provides configuration for the <a href="https://webpack.github.io/docs/webpack-dev-server.html">webpack-dev-server</a> package, which gives you a little Node.js <a href="http://expressjs.com/">Express</a> server. That is what allows you to recompile your assets as you make changes to your files.</p>
+
+<h5 id="babel">Babel</h5>
+<p>Another nice thing to have in a setup like this is the option to write <a href="http://es6-features.org/#Constants">ES6</a> code, which adds new features to your JavaScript, such as support for Constants and Arrow Functions, for instance.<br />
+<a href="https://babeljs.io/">Babel</a> is a Javascript compiler that allows you to write next generation Javascript and keep serving your browser with browser-compatible Javascript code.</p>
+
+<h4 id="project-structure">Project structure</h4>
+<p>The project consists basically of the folders <code class="highlighter-rouge">src</code>, where all the not yet compiled source code remains, and <code class="highlighter-rouge">dist</code>, where you can find the bundles generated for all your code. Also, as you can see in the project tree below, you also get a <code class="highlighter-rouge">webpack.config.js</code> and <code class="highlighter-rouge">package.json</code>, where you can check the dependencies the project uses.</p>
+
+<div class="align-center">
+  <img class="responsive-img" src="/images/posts/d3/project-tree.png" />
+</div>
+
+<h5 id="packagejson">package.json</h5>
+<p>First, let’s check the list of dependencies and commands we use in this setup. Below you can see the contents of the <code class="highlighter-rouge">package.json</code> file.</p>
+
+<div class="align-center">
+  <img class="responsive-img" src="/images/posts/d3/packagejson.png" />
+</div>
+
+<p>In the <code class="highlighter-rouge">scripts</code> block you can see the commands configured to start and build the project. For the <code class="highlighter-rouge">start</code> command we are using the <code class="highlighter-rouge">webpack-dev-server</code> available inside our <code class="highlighter-rouge">node_modules</code> folder, considering that the package was not installed globally in your machine. For the options passed to that command we have:</p>
+<ul>
+  <li><code class="highlighter-rouge">--hot</code>     : this enables <a href="https://webpack.github.io/docs/webpack-dev-server.html#hot-module-replacement-with-inline-mode-on-cli">Hot Module Replacement</a> in your server.</li>
+  <li><code class="highlighter-rouge">--inline</code>  : this adds the webpack-dev-server client entry point to the webpack configuration.</li>
+  <li><code class="highlighter-rouge">--progress</code>:  this displays the compilation progress in the command line.</li>
+</ul>
+
+<p>The <code class="highlighter-rouge">build</code> command is responsible for using the options passed in the <code class="highlighter-rouge">webpack.config.js</code> and generate a customized build for your assets. For that we have:</p>
+<ul>
+  <li><code class="highlighter-rouge">-p</code>: shortcut for setting <a href="https://webpack.js.org/guides/production/">production environment configuration</a>, such as minimizing Javascript files and running the LoaderOptionsPlugin.</li>
+  <li><code class="highlighter-rouge">--config</code>: specify the configuration file to be used.</li>
+  <li><code class="highlighter-rouge">--hide-modules</code>: hide ugly and unnecessary output on modules being compiled.</li>
+</ul>
+
+<p>As for the dependencies, we are using <code class="highlighter-rouge">babel-core</code>, <code class="highlighter-rouge">babel-loader</code>, <code class="highlighter-rouge">babel-preset-es2015</code>, and <code class="highlighter-rouge">babel-preset-stage-0</code> to setup Babel compiler. Also, we have to add dependencies to handle Sass syntaxe in our CSS and to bundle our styles in a separate file (<code class="highlighter-rouge">main.bundle.css</code>). Finally, of course, we added the D3 dependency in its version 4.10.0.</p>
+
+<h5 id="webpackconfigjs">webpack.config.js</h5>
+<p>The webpack configuration file is the place where you can customize your build process to match your needs. In the default configuration provided with this project we have the following sections:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">context</code>, <code class="highlighter-rouge">entry</code>, and <code class="highlighter-rouge">output</code></li>
+</ul>
+
+<div class="align-center">
+   <img class="responsive-img" src="/images/posts/d3/webpackcontext.png" />
+ </div>
+
+<p>Here you are basically telling webpack where it should look for files to compile and the files it should use as the entry point for the bundle. In this case we are passing the <code class="highlighter-rouge">app.js</code> and <code class="highlighter-rouge">main.scss</code> files, where all of your scripts and styles should be imported to. After that, the <code class="highlighter-rouge">output</code> key represents the folder and the name of the generated bundle file.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">module</code></li>
+</ul>
+
+<div class="align-center">
+   <img class="responsive-img" src="/images/posts/d3/webpackmodule.png" />
+ </div>
+
+<p>Here we are taking all of our modules (Javascript and Sass files) and applying loaders to them so webpack can generate browser-compatible code. It is important to notice that loaders are apllied from right to left, that means that for our stylesheets, for isntance, the <code class="highlighter-rouge">sass-loader</code> will be applied before the <code class="highlighter-rouge">css-loader</code>.</p>
+
+<p>The <code class="highlighter-rouge">ExtractTextPlugin</code> here is being used so we can generate a separated file for our stylesheets, instead of having them appended to a style tag in the final <code class="highlighter-rouge">index.html</code> file.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">devServer</code></li>
+</ul>
+
+<div class="align-center">
+   <img class="responsive-img" src="/images/posts/d3/webpackdevserver.png" />
+ </div>
+
+<p>Here is where the  <code class="highlighter-rouge">webpack-dev-server</code> is configured for making the live reloading option available for us. First we define which folder the server should look for the static files to be served. As the <code class="highlighter-rouge">webpack-dev-server</code> documentation explains,these files will be served from memory and not from disk, so even if you have not generated a bundle of the source code to the <code class="highlighter-rouge">dist</code> folder, the files will still be served to the browser.</p>
+
+<h5 id="appjs">app.js</h5>
+<p>This is where you can add all your D3 code. If you want to get a more drawn up structure you can create separate script files and import them here. Below is the snippet provided as example, in which we are using a <code class="highlighter-rouge">div</code> with the ID of <code class="highlighter-rouge">root</code>, that is available in the <code class="highlighter-rouge">index.html</code> file.</p>
+
+<div class="align-center">
+  <img class="responsive-img" src="/images/posts/d3/appjs.png" />
+</div>
+
+<h4 id="project-setup">Project setup</h4>
+<p>If you already have <a href="https://nodejs.org/en/">node</a> and <a href="https://www.npmjs.com/get-npm?utm_source=house&amp;utm_medium=homepage&amp;utm_campaign=free%20orgs&amp;utm_term=Install%20npm">npm</a> installed in your machine, you can simply run the commands listed in the steps below.</p>
+
+<h5 id="1-install-dependencies">1. Install dependencies</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ npm install
+</code></pre>
+</div>
+<p>Or using yarn</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ yarn install
+</code></pre>
+</div>
+
+<h5 id="2-run-server">2. Run server</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ npm start
+</code></pre>
+</div>
+<p>Or using yarn</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ yarn start
+</code></pre>
+</div>
+
+<p>Now you can open you browser and go to <code class="highlighter-rouge">http://localhost:4800/</code>. You should see the D3 version this project uses.</p>
+
+<h4 id="project-build">Project build</h4>
+
+<p>If you wanna generate the minified files for the project you can simply run the command below. The generated files will be available in the <code class="highlighter-rouge">dist</code> folder.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ npm run build
+</code></pre>
+</div>
+<p>Or using yarn</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ yarn run build
+</code></pre>
+</div>
+
+<p>If everything goes alright, then you are ready to start some D3 hacking. I hope you liked this post and if you have any commments or contribution, feel free to contact me or open a Pull Request.</p>
+
+<p>Have fun! :)</p>
+</div>
+
+</article>
+
+
+      </main>
+    </div>
+    <!-- /.home -->
+  </body>
+</html>
