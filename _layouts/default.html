@@ -64,6 +64,8 @@
     {% if page.url == "/" %}
       {% assign homepage = true %}
       {% assign homeClass = "home" %}
+    {% else %}
+      {% assign homeClass = "article-page" %}
     {% endif %}
 
     <header class="{{ homeClass }}">
