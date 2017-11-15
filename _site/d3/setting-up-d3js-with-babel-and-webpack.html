@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,6 +36,9 @@
 
     <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+    <script>hljs.initHighlightingOnLoad();</script>
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -184,22 +188,18 @@ As for the live reloading option, this setup provides configuration for the <a h
 <p>If you already have <a href="https://nodejs.org/en/">node</a> and <a href="https://www.npmjs.com/get-npm?utm_source=house&amp;utm_medium=homepage&amp;utm_campaign=free%20orgs&amp;utm_term=Install%20npm">npm</a> installed in your machine, you can simply run the commands listed in the steps below.</p>
 
 <h5 id="1-install-dependencies">1. Install dependencies</h5>
-<div class="highlighter-rouge"><pre class="highlight"><code>$ npm install
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ npm install
+</code></pre></div></div>
 <p>Or using yarn</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>$ yarn install
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ yarn install
+</code></pre></div></div>
 
 <h5 id="2-run-server">2. Run server</h5>
-<div class="highlighter-rouge"><pre class="highlight"><code>$ npm start
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ npm start
+</code></pre></div></div>
 <p>Or using yarn</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>$ yarn start
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ yarn start
+</code></pre></div></div>
 
 <p>Now you can open you browser and go to <code class="highlighter-rouge">http://localhost:4800/</code>. You should see the D3 version this project uses.</p>
 
@@ -207,13 +207,25 @@ As for the live reloading option, this setup provides configuration for the <a h
 
 <p>If you wanna generate the minified files for the project you can simply run the command below. The generated files will be available in the <code class="highlighter-rouge">dist</code> folder.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>$ npm run build
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ npm run build
+</code></pre></div></div>
 <p>Or using yarn</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>$ yarn run build
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ yarn run build
+</code></pre></div></div>
+
+<h4 id="loading-external-data">Loading external data</h4>
+<p>As loading external data is one of the most common things in a D3 project, this setup includes a basic flow to serve data files, such as JSON and CSV.<br />
+The <code class="highlighter-rouge">webpack.config.js</code> file includes a step in which all the files living in the <code class="highlighter-rouge">data</code> folder are copied to the <code class="highlighter-rouge">dist</code> folder so you can require them as you want. The default folder is called <code class="highlighter-rouge">data</code> and lives in the project root. If you want to change the name or location for that folder you just have to update the constant called <code class="highlighter-rouge">paths</code> in the <code class="highlighter-rouge">webpack.config.js</code> to match with your desired folder location.</p>
+
+<p>In the <code class="highlighter-rouge">app.js</code> file you can find an example on loading external files using D3. At the moment you clone this repo, the <code class="highlighter-rouge">sample.csv</code> file is already copied for you in the <code class="highlighter-rouge">dist</code> folder. However, if you want to add more data files or change the existing one, you will have to build the project so you will have those modifications available for you in the <code class="highlighter-rouge">dist</code> folder.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Loading external data
+d3.csv('/data/sample.csv', (error, dataset) =&gt; {
+  dataset.forEach((data) =&gt; {
+    console.log(data)
+  })
+})
+</code></pre></div></div>
 
 <p>If everything goes alright, then you are ready to start some D3 hacking. I hope you liked this post and if you have any commments or contribution, feel free to contact me or open a Pull Request.</p>
 

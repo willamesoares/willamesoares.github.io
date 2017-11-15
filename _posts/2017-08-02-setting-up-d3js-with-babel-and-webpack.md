@@ -133,7 +133,7 @@ The `webpack.config.js` file includes a step in which all the files living in th
 
 In the `app.js` file you can find an example on loading external files using D3. At the moment you clone this repo, the `sample.csv` file is already copied for you in the `dist` folder. However, if you want to add more data files or change the existing one, you will have to build the project so you will have those modifications available for you in the `dist` folder.
 
-```js
+```
 // Loading external data
 d3.csv('/data/sample.csv', (error, dataset) => {
   dataset.forEach((data) => {
