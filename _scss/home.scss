@@ -2,7 +2,7 @@
   margin-bottom: 3rem;
 
   nav {
-    height: 30em;
+    height: 28em;
   }
 
   &__nav {
@@ -14,8 +14,8 @@
     &__content {
       align-items: center;
       display: flex;
-      font-family: monospace;
       flex-direction: column;
+      margin-top: 3rem;
     }
   }
 
@@ -38,8 +38,30 @@
   &__brand {
     font-size: 2em;
     font-weight: bold;
+    letter-spacing: .2rem;
     margin-top: 1em;
     text-align: center;
+
+    @media (max-width: 480px) {
+      font-size: 1.8em;
+    }
+
+    &-description {
+      border-top: .125rem solid #a9a9a9;
+      border-bottom: .125rem solid #a9a9a9;
+      font-size: 1.2rem;
+      line-height: 2.5rem;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+
+      @media (max-width: 480px) {
+        font-size: 1rem;
+      }
+
+      &--push {
+        margin: 0 .5rem;
+      }
+    }
   }
 
   &__social-icons {
