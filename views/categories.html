@@ -1,0 +1,29 @@
+---
+layout: default
+permalink: /categories/
+title: Categories
+---
+
+<div class="row">
+{% for category in site.categories %}
+  <div class="col s12 l8">
+    <div class="categories__item">
+      {% capture category_name %}{{ category | first }}{% endcapture %}
+      <div id="#{{ category_name | slugize }}">
+        <h4 class="category-head">
+          <p class="badge badge--category">{{ category_name }}</p>
+        </h4>
+      </div>
+      <ul>
+        {% for post in site.categories[category_name] %}
+        <li class="categories__item-name">
+          <a href="{{ site.baseurl }}{{ post.url }}">
+            <h5>{{post.title}}</h5>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endfor %}
+</div>

@@ -2,7 +2,8 @@
 <html lang="en" prefix="og: http://ogp.me/ns#">
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow">
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow"> -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,400i,700" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
@@ -12,7 +13,7 @@
     <title>Setting Up D3.js with Babel and Webpack</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta property="og:url" content="http://0.0.0.0:4000/d3/setting-up-d3js-with-babel-and-webpack.html">
+    <meta property="og:url" content="http://willamesoares.com/tech/setting-up-d3js-with-babel-and-webpack/">
     <meta property="og:site_name" content="Will Soares">
 
     
@@ -54,43 +55,71 @@
   </head>
 
   <body>
-
-    
-
-    <header class="article-page">
-      <div class="header">
-        <nav class="navbar navbar-default navbar-static-top">
-          <div class="container home__nav">
-            <div class="navbar-header home__nav__content">
-              
-              <a class="navbar-brand" href="/"><img class="home__img home__img--small" src="/images/profile.jpg"></a>
-              
-
+    <div class="container-fluid full-height">
+      <div class="row no-margin full-height">
+        <div class="col s12 m3 sidemenu profile">
+          <a  href="/" class="hide-on-small-only">
+            <div class="profile__image-wrapper">
+              <img class="profile__image" src="/images/profile.png">
             </div>
-            <!-- /.navbar-header  -->
+          </a>
+          <h4 class="profile__name">
+            <a href="/"><b>Will Soares</b></a>
+          </h4>
+          <div class="separator separator-fixed"></div>
+          <p class="sidemenu__headline center-align">Front-end Developer and Computer Scientist</p>
+          <div class="social__icons">
+            <a href="https://twitter.com/Willame_soares" target="_blank">
+              <img src="/images/svg/twitter.svg" alt="Twitter">
+            </a>
+            <a href="https://www.linkedin.com/in/willamesoares/?locale=en_US" target="_blank">
+              <img src="/images/svg/linkedin.svg" alt="Facebook">
+            </a>
+            <a href="https://github.com/willamesoares" target="_blank">
+              <img src="/images/svg/github.svg" alt="Google Plus">
+            </a>
+            <a href="https://codepen.io/willamesoares" target="_blank">
+              <img src="/images/svg/codepen.svg" alt="Github">
+            </a>
           </div>
-          <!-- /.container -->
-        </nav>
-        <!-- /.navbar navbar-default navbar-static-top -->
-      </header>
-      <!-- /.header -->
-
-      <main class="container">
-
-        <article>
-    <header>
-        <h3 class="left-align">Setting Up D3.js with Babel and Webpack</h3>
-        <div class="post-info">
-            <div class="author-published">
-                by Will Soares
-            </div>
-            <div class="date-published">
-                <time datetime="2017-08-02 00:00:00 +0000">August 02, 2017</time>
-            </div>
         </div>
-    </header>
+        <!-- /.sidemenu -->
 
-    <div><div class="center-align">
+        <div class="col s12 m9 post full-height">
+          <div class="post__section">
+            <div  class="row">
+  <div class="col s12 l8 margin-bottom margin-top">
+    <div class="post__body">
+      <div  class="post__header">
+        <h3 class="left-align">Setting Up D3.js with Babel and Webpack</h3>
+        <div class="post__info">
+          <div class="author-published">
+            by Will Soares
+          </div>
+          <div class="date-published">
+            <time datetime="2017-08-02 00:00:00 -0500">August 02, 2017</time>
+          </div>
+
+          
+          <a href="/categories#tech">
+            <small class="badge badge--category">tech</small>
+          </a>
+          
+
+          
+          <a href="/tags#D3">
+            <small class="badge badge--tag">D3</small>
+          </a>
+          
+          <a href="/tags#webpack">
+            <small class="badge badge--tag">webpack</small>
+          </a>
+          
+
+        </div>
+      </div>
+      <div class="post__content">
+        <div class="center-align bordered">
   <img class="responsive-img" src="/images/posts/d3/d3logo.png" />
 </div>
 
@@ -189,18 +218,22 @@ As for the live reloading option, this setup provides configuration for the <a h
 <p>If you already have <a href="https://nodejs.org/en/">node</a> and <a href="https://www.npmjs.com/get-npm?utm_source=house&amp;utm_medium=homepage&amp;utm_campaign=free%20orgs&amp;utm_term=Install%20npm">npm</a> installed in your machine, you can simply run the commands listed in the steps below.</p>
 
 <h5 id="1-install-dependencies">1. Install dependencies</h5>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ npm install
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ npm install
+</code></pre>
+</div>
 <p>Or using yarn</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ yarn install
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ yarn install
+</code></pre>
+</div>
 
 <h5 id="2-run-server">2. Run server</h5>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ npm start
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ npm start
+</code></pre>
+</div>
 <p>Or using yarn</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ yarn start
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ yarn start
+</code></pre>
+</div>
 
 <p>Now you can open you browser and go to <code class="highlighter-rouge">http://localhost:4800/</code>. You should see the D3 version this project uses.</p>
 
@@ -208,11 +241,13 @@ As for the live reloading option, this setup provides configuration for the <a h
 
 <p>If you wanna generate the minified files for the project you can simply run the command below. The generated files will be available in the <code class="highlighter-rouge">dist</code> folder.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ npm run build
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ npm run build
+</code></pre>
+</div>
 <p>Or using yarn</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ yarn run build
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ yarn run build
+</code></pre>
+</div>
 
 <h4 id="loading-external-data">Loading external data</h4>
 <p>As loading external data is one of the most common things in a D3 project, this setup includes a basic flow to serve data files, such as JSON and CSV.<br />
@@ -220,13 +255,14 @@ The <code class="highlighter-rouge">webpack.config.js</code> file includes a ste
 
 <p>In the <code class="highlighter-rouge">app.js</code> file you can find an example on loading external files using D3. At the moment you clone this repo, the <code class="highlighter-rouge">sample.csv</code> file is already copied for you in the <code class="highlighter-rouge">dist</code> folder. However, if you want to add more data files or change the existing one, you will have to build the project so you will have those modifications available for you in the <code class="highlighter-rouge">dist</code> folder.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Loading external data
+<div class="highlighter-rouge"><pre class="highlight"><code>// Loading external data
 d3.csv('/data/sample.csv', (error, dataset) =&gt; {
   dataset.forEach((data) =&gt; {
     console.log(data)
   })
 })
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>If everything goes alright, then you are ready to start some D3 hacking. I hope you liked this post and if you have any commments or contribution, feel free to contact me or open a Pull Request.</p>
 
@@ -237,13 +273,16 @@ d3.csv('/data/sample.csv', (error, dataset) =&gt; {
 <div class="align-center">
   <img class="responsive-img" src="/images/posts/d3/d3example.gif" />
 </div>
+
+      </div>
+      <div class="separator"></div>
+    </div>
+  </div>
 </div>
 
-</article>
-
-
-      </main>
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- /.home -->
   </body>
 </html>

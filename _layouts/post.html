@@ -2,19 +2,37 @@
 layout: default
 ---
 
-<article>
-    <header>
+<div  class="row">
+  <div class="col s12 l8 margin-bottom margin-top">
+    <div class="post__body">
+      <div  class="post__header">
         <h3 class="left-align">{{ page.title }}</h3>
-        <div class="post-info">
-            <div class="author-published">
-                by {{ page.author }}
-            </div>
-            <div class="date-published">
-                <time datetime="{{ page.date }}">{{ page.date | date: '%B %d, %Y' }}</time>
-            </div>
+        <div class="post__info">
+          <div class="author-published">
+            by {{ page.author }}
+          </div>
+          <div class="date-published">
+            <time datetime="{{ page.date }}">{{ page.date | date: '%B %d, %Y' }}</time>
+          </div>
+
+          {% for category in page.categories %}
+          <a href="/categories#{{category | lowercase }}">
+            <small class="badge badge--category">{{ category }}</small>
+          </a>
+          {% endfor %}
+
+          {% for tag in page.tags %}
+          <a href="/tags#{{tag}}">
+            <small class="badge badge--tag">{{ tag }}</small>
+          </a>
+          {% endfor %}
+
         </div>
-    </header>
-
-    <div>{{ content }}</div>
-
-</article>
+      </div>
+      <div class="post__content">
+        {{ content }}
+      </div>
+      <div class="separator"></div>
+    </div>
+  </div>
+</div>

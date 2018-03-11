@@ -1,10 +1,16 @@
 ---
 ---
 
+// global stylesheets
 @import 'variables';
 @import 'base';
-@import 'home';
-@import 'header';
-@import 'footer';
-@import 'breakpoints';
-@import 'card';
+@import 'mixins';
+@import 'helpers';
+
+// components stylesheets
+@import 'sidemenu';
+@import 'social';
+@import 'tags';
+@import 'categories';
+@import 'post';
+@import 'profile';

@@ -1,8 +1,3 @@
-$breakpoint-mobile: 420px;
-$breakpoint-tablet: 768px;
-$breakpoint-desktop: 992px;
-$breakpoint-desktop-lg: 1200px;
-
 @mixin breakpoint($class) {
   @if $class == xs {
     @media (max-width: $breakpoint-mobile) { @content; }
