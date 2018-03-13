@@ -1,6 +1,6 @@
 .post {
   overflow: auto;
-  
+
   &__body {
     padding: 0 2rem;
   }
@@ -24,6 +24,10 @@
     &:hover {
       text-decoration: underline;
     }
+  }
+
+  &__image {
+    max-width: 100%
   }
 }
 

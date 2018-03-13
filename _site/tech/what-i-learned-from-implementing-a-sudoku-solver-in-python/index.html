@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+  <head>
+    <meta charset="utf-8">
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow"> -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>What I learned from implementing a Sudoku solver in Python</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta property="og:url" content="http://willamesoares.com/tech/what-i-learned-from-implementing-a-sudoku-solver-in-python/">
+    <meta property="og:site_name" content="Will Soares">
+
+    
+    <meta property="og:title" content="What I learned from implementing a Sudoku solver in Python">
+    
+
+    
+    <meta name="description" content="The pros and cons of knowing a language before using it to solve your problem">
+    <meta name="og:description" content="The pros and cons of knowing a language before using it to solve your problem">
+    
+
+    
+    <meta property="og:image" content="">
+    
+
+    
+
+    
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2018-03-13">
+    
+
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-96614926-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+  </head>
+
+  <body>
+    <div class="container-fluid full-height">
+      <div class="row no-margin full-height">
+        <div class="col s12 m3 sidemenu profile">
+          <a  href="/" class="hide-on-small-only">
+            <div class="profile__image-wrapper">
+              <img class="profile__image" src="/images/profile.png">
+            </div>
+          </a>
+          <h4 class="profile__name">
+            <a href="/"><b>Will Soares</b></a>
+          </h4>
+          <div class="separator separator-fixed"></div>
+          <p class="sidemenu__headline center-align">Front-end Developer and Computer Scientist</p>
+          <div class="social__icons">
+            <a href="https://twitter.com/Willame_soares" target="_blank">
+              <img src="/images/svg/twitter.svg" alt="Twitter">
+            </a>
+            <a href="https://www.linkedin.com/in/willamesoares/?locale=en_US" target="_blank">
+              <img src="/images/svg/linkedin.svg" alt="Facebook">
+            </a>
+            <a href="https://github.com/willamesoares" target="_blank">
+              <img src="/images/svg/github.svg" alt="Google Plus">
+            </a>
+            <a href="https://codepen.io/willamesoares" target="_blank">
+              <img src="/images/svg/codepen.svg" alt="Github">
+            </a>
+          </div>
+        </div>
+        <!-- /.sidemenu -->
+
+        <div class="col s12 m9 post full-height">
+          <div class="post__section">
+            <div  class="row">
+  <div class="col s12 l8 margin-bottom margin-top">
+    <div class="post__body">
+      <div  class="post__header">
+        <h3 class="left-align">What I learned from implementing a Sudoku solver in Python</h3>
+        <div class="post__info">
+          <div class="author-published">
+            by Will Soares
+          </div>
+          <div class="date-published">
+            <time datetime="2018-03-13 00:00:00 -0500">March 13, 2018</time>
+          </div>
+
+          
+          <a href="/categories#tech">
+            <small class="badge badge--category">tech</small>
+          </a>
+          
+
+          
+          <a href="/tags#python">
+            <small class="badge badge--tag">python</small>
+          </a>
+          
+
+        </div>
+      </div>
+      <div class="post__content">
+        <img class="post__image" src="/images/posts/railway.jpg">
+        <p>Hey there!</p>
+
+<p>For those who like storytelling, this post will probably be a good reading. However, if you are not into storytelling or just here for the technical part, jump to the <code class="highlighter-rouge">Show me the code</code> section.</p>
+
+<p>For this post, I decided to write about the journey I took when I decided to implement a sudoku solver in Python (I hope I remember all the details and also what my legacy code is doing).</p>
+
+<p>The language I chose to solve this problem is, in fact, one of the main reasons why I’m writing this post. Without it, maybe this whole story wouldn’t be a journey worth telling.</p>
+
+<p>Firstly, I’ll explain in which context I decided to implement a solution for the <a href="http://www.sudoku.com/">Sudoku</a> game. Of course, there are many things I usually think that I can solve with code, but those things rarely end up being implemented. So why was this case different from the others?</p>
+
+<p>Well, last year I graduated in Computer Science and <em>luckily</em> that was the same year that the Department of Education in Brazil was evaluating all the undergraduate courses in public and private universities. It was a test called <a href="http://portal.inep.gov.br/enade">Enade</a>, which is applied every three* years for each field of study.</p>
+
+<p>As I was already a senior student, I had to take the test in order to complete my degree (<a href="http://portal.inep.gov.br/perguntas-frequentes4">that is a law now in Brazil</a>). I was pretty comfortable in doing it (I just did not agree with it being a duty) and I thought that with a quick review on some CS related concepts, I was going to be fine. Well…</p>
+
+<p>It is well known that this test gathers topics from the entire course (4 years, in general) and try to formulate questions, in which you are going to put things together in order to solve them. I was aware that I was going to face both pretty basic problems and really hard ones (those that you usually skip and come back at the end of the test just to be sure that you really have no idea how to solve it). It turns out that there was this one question that I thought it would be straightforward to answer but then it became the one I was going to skip, for sure.</p>
+
+<p>The fact is that when I came back to the question I thought I was solving it but then when I finished writing a pseudolanguage solution I realized that there was a bug in my solution and I had no time to fix it :(</p>
+
+<p>I was intrigued by that question, for real! So I decided I was going to implement it at home.</p>
+
+<p>Why don’t we move to the technical details right away?</p>
+
+<h3 id="show-me-the-code-almost-there">Show me the code! (almost there)</h3>
+
+<p>In the mentioned question, you would have to write an algorithm that applied the concepts of recursive programming and backtracking to solve a sudoku game. For that, you could assume that some of the required functions were already implemented, for instance, the function responsible for telling you if a specific number is allowed in a specific column and row (of course it had to be the easiest one, not helping that much here, right?).</p>
+
+<p>Basically, you would have as an input an array of pre-populated positions and a common number (or any other allowed character) to represent the positions your algorithm will have to fill out.</p>
+
+<p>And that was the situation the question was providing you with. The way you were going to reach a solution would be up to you, regarding programming language and general logic (you could even use a pseudolanguage). The requirements were that you implement a recursive solution with a backtracking behavior.</p>
+
+<p>If you don’t remember or have never heard about those two concepts, here is a quick review.</p>
+
+<h4 id="recursive-programming">Recursive programming</h4>
+
+<p>When you apply a recursive approach to solve a problem you are basically tearing apart the functionality of your program into smaller programs that solve the same problem. In the end, what you have to do is to reuse (that’s why it’s called recursive) the smaller function you created to solve your problem in its entirety.</p>
+
+<p>I know, the previous paragraph was not enough to make the concept clear (I myself didn’t get the idea at the first or second, maybe the third attempt?).</p>
+
+<p>Let me try again, putting it in a simpler way, a recursive program is the one that tries to solve a problem by calling itself. The thing is that in that second call, the input will be a portion of the original input, so it can solve smaller problems and finally put everything together to give you the final solution.</p>
+
+<p>Well, can you imagine how confusing it is to keep track of what a function is doing if it keeps calling itself again and again? That’s not fun to do, trust me.</p>
+
+<p>The cool thing here is that you don’t really have to do that in order to understand the concept. It is enough if you are sure that the recursive function you implemented to solve a small portion of your problem is giving you the correct output. If it helps you, just accept that this is some sort of magic :)</p>
+
+<p>Maybe, by now, you are wondering how is this thing going to stop if it keeps calling itself?</p>
+
+<p>Well, here comes an important concept in recursive programming: the <em>base case</em> - this is the situation in which your program arrived at, let’s say, the smallest portion of your program and is able to return a value instead of a call to the same function. That is when your program starts returning values so it can reach a final solution.</p>
+
+<p>Let’s go to a real example.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sum</span> <span class="p">(</span><span class="n">n</span><span class="p">):</span>                           <span class="k">def</span> <span class="nf">sumR</span> <span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>                                <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>                    <span class="k">return</span> <span class="mi">1</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">res</span> <span class="o">+</span> <span class="n">i</span>                      <span class="k">else</span><span class="p">:</span>
+                                               <span class="k">return</span> <span class="n">n</span> <span class="o">+</span> <span class="n">sumR</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>
+</code></pre>
+</div>
+
+<p>Both of the functions above are responsible for summing up to a given number and returning the total value. The difference is that on the left side, you have an iterative function (the “traditional” way of solving things) and on the right side it is a recursive version of it.</p>
+
+<p>Notice that in the recursive method the function <code class="highlighter-rouge">sumR</code> is called within itself, but with an input of <code class="highlighter-rouge">n-1</code>. What is happening here? This is the <em>magic</em> part I mentioned.</p>
+
+<p>Let’s imagine that the input for the <code class="highlighter-rouge">sumR</code> function is <code class="highlighter-rouge">3</code>, so <code class="highlighter-rouge">n = 3</code>.</p>
+
+<p>In the first call, since 3 is not equal to 1, the program will execute the <code class="highlighter-rouge">else</code> block:</p>
+
+<p><code class="highlighter-rouge">return 3 + sumR(3 - 1)</code></p>
+
+<p>From here the program is going to enter in a new iteration and a new level in the stack of calls, but at this time the input will be <code class="highlighter-rouge">3 - 1</code>, which is 2.</p>
+
+<p>Again, 2 is not equal to 1 so the else block will be executed again and now the input for <code class="highlighter-rouge">sumR</code> will be <code class="highlighter-rouge">2 - 1</code>, which is 1.</p>
+
+<p>Oh hey, now the <code class="highlighter-rouge">if</code> block will be executed since the input is equal to 1. So what happens here is that the same function is not going to be executed again, instead, the value 1 will be returned.</p>
+
+<p>With that value returned, it will be used in the previous call which was:</p>
+
+<p><code class="highlighter-rouge">return 2 + sumR(2 -1)</code>, equivalent to <code class="highlighter-rouge">return 2 + 1</code>, which is 3</p>
+
+<p>Now we have one more level solved and the value obtained will be used in the first recursive call to <code class="highlighter-rouge">sumR</code>, which was:</p>
+
+<p><code class="highlighter-rouge">return 3 + sumR(3 - 1)</code>, equivalent to <code class="highlighter-rouge">return 3 + 3</code>, which is 6.</p>
+
+<p>And that is the final summation of the numbers from 1 to 3.</p>
+
+<p>Did you notice how exhausting it is to keep track of that even for a small input? If not, try to do the same thing for an input of 5 or 10 :)</p>
+
+<p>After understanding how recursion works, if you wanna keep practicing it, this <a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-189-a-gentle-introduction-to-programming-using-python-january-iap-2011/lectures/MIT6_189IAP11_rec_problems.pdf">quiz</a> is a good starting point. It might not be that easy at the beginning but once you get it, it’s like magic!</p>
+
+<h4 id="backtracking">Backtracking</h4>
+
+<p>This concept is also important to have in mind before reading the solution presented in this post. The idea here is simply to look for a solution in a range of possible candidates by trying each one of them and then discarding it at the first sign of an incorrect path.</p>
+
+<p>It looks like a dumb way to solve things, but that’s it. It recursively tries all the possible solutions until it finds the one. Imagine that the program is going through all the branches one at a time and then coming back, in regret, because that was the wrong path and then it goes to the next one.</p>
+
+<p>But it can’t be that bad, right? Some solutions implement heuristics for the backtracking approach, in which the algorithm automatically refuses candidates that are obviously bad. Here is a good <a href="http://jeffe.cs.illinois.edu/teaching/algorithms/notes/03-backtracking.pdf">article</a> on backtracking.</p>
+
+<h3 id="show-me-the-code-for-real---the-naive-solution">Show me the code! (for real) - The Naive Solution</h3>
+
+<p>The very first thing I thought about before diving into this adventure was to choose a language with a syntax I would be comfortable with. That was the main reason why I chose Python. I didn’t want to spend time checking semicolons or curly brackets at the beginning. I was actually trying to focus only on the algorithm logic.</p>
+
+<p>So here we go. Starting from scratch.</p>
+
+<p>As a developer I always try to break problems in tiny pieces, implementing a solution for those pieces and then putting everything together. For this problem, I started with the most basic functions, such as the one previously mentioned: validating an input in a specific position in the array.</p>
+
+<p>Just a quick recap: the input for this algorithm should be an array with some prepopulated positions, those will be the fixed numbers that cannot be changed, as in the real sudoku game.</p>
+
+<p>For the input array I set this example (with 0’s representing the positions to fill out):</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">V</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span>
+    <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+<span class="p">]</span>
+</code></pre>
+</div>
+<p>Here you would have lots of options as to how the shape of this array should be. I decided to use a 81 length array, due to simplicity, in my opinion. Notice I have not thought about performance issues so far :)</p>
+
+<p>You could also have a <code class="highlighter-rouge">(9,9)</code> array shape, in which each item would be another array of 9 items. The nested arrays could represent either columns or rows, it is up to you.</p>
+
+<h5 id="has_violation"><code class="highlighter-rouge">has_violation</code></h5>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">has_violation</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="n">pos_to_check</span> <span class="o">=</span> <span class="n">get_positions_to_check</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">pos_to_check</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pos_to_check</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">V</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">return</span> <span class="bp">False</span>
+    <span class="k">else</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="s">"No index available."</span>
+</code></pre>
+</div>
+
+<p>This is the function responsible for checking for violations when inserting a value in a given position. It receives the array ‘V’ with the current state of filled positions, the value to be inserted, and the index that will be filled.</p>
+
+<p>Here, I am basically using the <code class="highlighter-rouge">get_positions_to_check</code> to get all the positions that intersect vertically and horizontally with the given index. With that, the function checks if at least one of these positions has the same value as the value passed as a parameter to the <code class="highlighter-rouge">has_violation</code> function. It returns <code class="highlighter-rouge">False</code> if no violations occur, <code class="highlighter-rouge">True</code> otherwise.</p>
+
+<h5 id="get_positions_to_check"><code class="highlighter-rouge">get_positions_to_check</code></h5>
+
+<p>Be aware that this one could possibly be unpleasant for your eyes :)</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_positions_to_check</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="n">positions_to_check</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">before_up</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">9</span>
+    <span class="n">after_down</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">9</span>
+    <span class="n">before_left</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="n">after_right</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">80</span><span class="p">:</span>
+        <span class="k">while</span> <span class="n">before_up</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">positions_to_check</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">before_up</span><span class="p">)</span>
+            <span class="n">before_up</span> <span class="o">-=</span> <span class="mi">9</span>
+
+        <span class="k">while</span> <span class="n">after_down</span> <span class="o">&lt;=</span> <span class="mi">80</span><span class="p">:</span>
+            <span class="n">positions_to_check</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">after_down</span><span class="p">)</span>
+            <span class="n">after_down</span> <span class="o">+=</span> <span class="mi">9</span>
+
+        <span class="k">while</span> <span class="n">before_left</span> <span class="o">%</span> <span class="mi">9</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">before_left</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">positions_to_check</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">before_left</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="n">after_right</span> <span class="o">%</span> <span class="mi">9</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">positions_to_check</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">after_right</span><span class="p">)</span>
+            <span class="n">after_right</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">positions_to_check</span>
+</code></pre>
+</div>
+
+<p>This is the implementation of the function previously mentioned. It basically checks for all the positions that intersect with a given index.</p>
+
+<p>It does that by checking all the positions that are both up, down, right, and left of the specific index. Those positions are determined by a factor of 9 starting from the index received as a parameter. For instance, if the index received is 30 (showed in green in the image below), the positions in the up direction will all be located in indexes that differ from exactly 9 positions from each one.</p>
+
+<div class="center-align">
+  <img class="responsive-img" src="/images/posts/sudoku/board1.png" />
+</div>
+<p><small>Remember that 0’s are used to represent blank positions.</small></p>
+
+<p>In this image, the values that are above the position in green are respectively in the positions 3, 12, and 21. Since we received 30 as the index to check, we have:</p>
+
+<p><code class="highlighter-rouge">3  == 30 - (9 * 3)</code>
+<code class="highlighter-rouge">12 == 30 - (9 * 2)</code>
+<code class="highlighter-rouge">21 == 30 - (9 * 1)</code></p>
+
+<p>With that is easy to get the positions that are vertically intersecting the received index.</p>
+
+<p>For the positions in the same row, we have to work differently. Here I’m using the fact that each row starts with a multiple of 9 as its position number. For the index received, the first position in the same row has 27 as its index (you can count in the image above). So, is easy to use that as a stopping point for the positions on the left. We can use the same logic for the positions on the right, the difference is that the multiple of 9 will be the first number in the next row, so we don’t want to include that in the <code class="highlighter-rouge">positions_to_check</code> array.</p>
+
+<p>You should notice that the shape of the array ended up making this step a little bit cumbersome. Probably if I have used an array with a shape of <code class="highlighter-rouge">(9, 9)</code>, this step, specifically, would have been easier.</p>
+
+<h5 id="fill_matrix"><code class="highlighter-rouge">fill_matrix</code></h5>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">fill_matrix</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">ignore_pos</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">direction</span> <span class="o">=</span> <span class="s">'fw'</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">80</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ignore_pos</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s">'fw'</span><span class="p">:</span>
+            <span class="n">fill_matrix</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">ignore_pos</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="n">fill_matrix</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">ignore_pos</span><span class="p">,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'bw'</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">V</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">9</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">has_violation</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">V</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+            <span class="n">V</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">fill_matrix</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">ignore_pos</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="n">V</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">fill_matrix</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">ignore_pos</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span> <span class="p">:</span>
+        <span class="n">V</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">fill_matrix</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">ignore_pos</span><span class="p">,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'bw'</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>And finally, we get to the recursive function where all the <em>magic</em> happens.</p>
+
+<p>Here I’m using a pretty straightforward approach, which didn’t have to be that simple, but it actually works pretty well for the purpose of this post.</p>
+
+<p>In order to control the paths the algorithm should follow, I’m using some <em>flags</em> (<code class="highlighter-rouge">fw</code> and <code class="highlighter-rouge">bw</code>) here as a sign that would tell the function to keep going <code class="highlighter-rouge">forward</code> or <code class="highlighter-rouge">backward</code>, in case it finds a wrong candidate. This is exactly where the backtracking requirement comes into play.</p>
+
+<p>You can easily see that for a given index <code class="highlighter-rouge">i</code>, if it is in the list of positions to ignore or if the value in that position is already the highest value possible (9), then the algorithm should backtrack since that path is not the correct one. That is what the last line of the function is doing:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">fill_matrix</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">ignore_pos</span><span class="p">,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'bw'</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Probably, you have already noticed the first <code class="highlighter-rouge">if</code> statement in this function and that is exactly what you are thinking: the <em>base case</em>. This is the stopping point of the algorithm. It assumes that if the index has arrived at the last position without an error, it means that the sudoku was solved. Yay!</p>
+
+<p>The other <code class="highlighter-rouge">if</code> statements in this function are pretty simple, you can understand it just by looking at it, of course, if you have grasped how recursive functions work.</p>
+
+<p>To take a look at the entire script, you can check this <a href="https://gist.github.com/willamesoares/77c598269f409f3d50d09bf11246dfe8">gist</a>.</p>
+
+<h4 id="so-what-whats-the-real-point-in-all-of-this">So what? What’s the real point in all of this?</h4>
+
+<p>Well, so far it felt like I was really doing a great job and was finally coming up with a Sudoku solver until I finally tested it. Guess what happened?</p>
+
+<p>IT DID NOT WORK!</p>
+
+<p>Yeah, all of that hard work and fancy concepts did not give me the output I was expecting and instead, it threw an ugly and large error log, like the one in the image below.</p>
+
+<p class="center-align">
+  <img class="responsive-img" src="/images/posts/sudoku/log1.png" />
+</p>
+
+<p>Unfortunately, as I was extremely frustrated at the moment, I didn’t really see the message that says <code class="highlighter-rouge">RecursionError: maximum recursion depth exceeded in comparison</code> and ended up trying to debug the whole error log. Yes, I tried to follow what the algorithm was doing step-by-step (it was probably about 30 min doing that) until I realized that the problem was not related to the logic I was following, but with the language itself.</p>
+
+<p>When I read that the problem was that the limit of recursion level was exceeded, I was like: why is that? I’m just trying to solve a simple Sudoku board!</p>
+
+<p>In fact, the stack of recursive calls that the algorithm was building started to grow really big and after some research, I realized an interesting thing about Python.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>    <span class="n">Python</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">offer</span> <span class="n">you</span> <span class="n">Tail</span> <span class="n">Recursion</span> <span class="n">Elimination</span><span class="o">.</span>
+</code></pre>
+</div>
+
+<p>But wait, what does <code class="highlighter-rouge">Tail Recursion Elimination</code> even mean? I knew about recursive programming and I thought that was the only type of recursion I would have to write. However, I realized that what I was doing was actually a kind of recursion called tail recursion.</p>
+
+<p>Tail recursion is when the last line of your recursive function is a call to itself, and there is nothing more after that. That is exactly what the <code class="highlighter-rouge">fill_matrix</code> function looks like, right?</p>
+
+<p>The thing here is that the tail recursion approach is much better for saving memory space since the computer does not have to do anything else after calling the recursive function, so it can forget about all the variables in that function and even reuse that space.</p>
+
+<p>The real problem with the approach used was, in fact, the language I chose to solve it with. As the requirements of the question were that I should implement a recursive algorithm, Python is not really the best option to do that.</p>
+
+<p>Even though I was doing tail recursion (without knowing), Python was not really doing anything with that, because it simply does not support it (or don’t know what to do with it). Due to that, the stack of calls was growing too large.</p>
+
+<p>What are the solutions here? Maybe using a programming language that offers Tail Recursion Elimination (functional programming languages often offer that) or doing some trick to make it work with Python.</p>
+
+<p>After all, I don’t blame Python for that, it wasn’t built around the idea of recursion.</p>
+
+<p>Just to let you know, I got the output I wanted by simply increasing the recursion limit supported in Python. That was a really dirty and dangerous way to solve it, but I just wanted to see if my algorithm was working. Actually, there are some modules with which you can add this feature to the language. See useful links below.</p>
+
+<p>This was the line I used to increase the recursion limit.</p>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>    <span class="n">sys</span><span class="o">.</span><span class="n">setrecursionlimit</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>As this post is growing as large as the stack of recursive calls of my algorithm, I want to summarise the idea I wanted to communicate. I learned the importance of knowing your language before using it to solve a specific problem. It is important to know what a language offers to you before even getting to think about applying it to a real-world problem. Imagine if that was a large project and I have spent lots of months implementing a solution just to realize later that I have a tragic limitation with a language and I would spend more time trying to work around it.</p>
+
+<p>As regarding the learning experience, it was actually awesome that I used Python for this. Those are the kind of challenge that makes you learn the most.</p>
+
+<p>After all, I could appreciate the Sudoku board solved and it felt like heaven.</p>
+
+<p>This is the solution if you wanna make sure the algorithm works.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+ <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span>
+ <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
+ <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span>
+ <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span>
+ <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span>
+ <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span>
+ <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span>
+ <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span>
+</code></pre>
+</div>
+
+<p>Ps.: sorry about some references being available only in Portuguese :(</p>
+
+<p>Thanks for reading, I hope you liked it. If so, let me know so I can keep writing posts like this :)</p>
+
+<p>Some useful links:
+<a href="https://stackoverflow.com/questions/13591970/does-python-optimize-tail-recursion">StackOverflow - Does Python optimize tail recursion?</a>
+<a href="http://chrispenner.ca/posts/python-tail-recursion">Python Tail Recursion</a>
+<a href="https://github.com/baruchel/tco">brauchel - tco module</a></p>
+
+      </div>
+      <div class="separator"></div>
+    </div>
+  </div>
+</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

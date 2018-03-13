@@ -8,10 +8,6 @@ tags:        [D3, webpack]
 image:       /images/posts/d3/d3logo.png
 ---
 
-<div class="center-align bordered">
-  <img class="responsive-img" src="/images/posts/d3/d3logo.png">
-</div>
-
 Hello there! This is a post I decided to write when I found myself looking for a basic setup in order to start learning [D3.js](https://d3js.org/). Yeah, I know, you don't have to configure a npm package just to start playing with D3. At its simplest, you can go to [blockbuilder.org](http://blockbuilder.org/) and edit the provided boilerplate code to see things working. Likewise, you can simply create an `index.html` file, add the [D3 CDN](https://cdnjs.com/libraries/d3), and include a script where you have written some D3 code. Those are really great alternatives if you are just trying to create some drafts and see how D3 works. However, when we want to create a well structured project where we have to use D3 and handle external data source, for instance, it is good to start with something we can easily scale.
 
 In fact, what truly pushed me to going for this setup was that I find it really tedious to have to open the browser and manually reload the page every time I want to see how things changed. Now, if you think about working with D3 where you are basically dealing with visual stuff as an output, can you understand how good it is to have live reloading available?

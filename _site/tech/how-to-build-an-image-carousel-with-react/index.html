@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+  <head>
+    <meta charset="utf-8">
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow"> -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>How to build an image carousel with React</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta property="og:url" content="http://willamesoares.com/tech/how-to-build-an-image-carousel-with-react/">
+    <meta property="og:site_name" content="Will Soares">
+
+    
+    <meta property="og:title" content="How to build an image carousel with React">
+    
+
+    
+    <meta name="description" content="Learn how to build a simple carousel of images using React.js">
+    <meta name="og:description" content="Learn how to build a simple carousel of images using React.js">
+    
+
+    
+    <meta property="og:image" content="">
+    
+
+    
+
+    
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2018-03-13">
+    
+
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-96614926-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+  </head>
+
+  <body>
+    <div class="container-fluid full-height">
+      <div class="row no-margin full-height">
+        <div class="col s12 m3 sidemenu profile">
+          <a  href="/" class="hide-on-small-only">
+            <div class="profile__image-wrapper">
+              <img class="profile__image" src="/images/profile.png">
+            </div>
+          </a>
+          <h4 class="profile__name">
+            <a href="/"><b>Will Soares</b></a>
+          </h4>
+          <div class="separator separator-fixed"></div>
+          <p class="sidemenu__headline center-align">Front-end Developer and Computer Scientist</p>
+          <div class="social__icons">
+            <a href="https://twitter.com/Willame_soares" target="_blank">
+              <img src="/images/svg/twitter.svg" alt="Twitter">
+            </a>
+            <a href="https://www.linkedin.com/in/willamesoares/?locale=en_US" target="_blank">
+              <img src="/images/svg/linkedin.svg" alt="Facebook">
+            </a>
+            <a href="https://github.com/willamesoares" target="_blank">
+              <img src="/images/svg/github.svg" alt="Google Plus">
+            </a>
+            <a href="https://codepen.io/willamesoares" target="_blank">
+              <img src="/images/svg/codepen.svg" alt="Github">
+            </a>
+          </div>
+        </div>
+        <!-- /.sidemenu -->
+
+        <div class="col s12 m9 post full-height">
+          <div class="post__section">
+            <div  class="row">
+  <div class="col s12 l8 margin-bottom margin-top">
+    <div class="post__body">
+      <div  class="post__header">
+        <h3 class="left-align">How to build an image carousel with React</h3>
+        <div class="post__info">
+          <div class="author-published">
+            by Will Soares
+          </div>
+          <div class="date-published">
+            <time datetime="2018-03-13 00:00:00 -0500">March 13, 2018</time>
+          </div>
+
+          
+          <a href="/categories#tech">
+            <small class="badge badge--category">tech</small>
+          </a>
+          
+
+          
+          <a href="/tags#react">
+            <small class="badge badge--tag">react</small>
+          </a>
+          
+          <a href="/tags#javascript">
+            <small class="badge badge--tag">javascript</small>
+          </a>
+          
+
+        </div>
+      </div>
+      <div class="post__content">
+        <img class="post__image" src="/images/posts/react/carousel1.png">
+        <p>Hey everyone!</p>
+
+<p>For this post, I decided to work with something I’m currently passionate about, React.</p>
+
+<p>Recently, I’m having the opportunity to work a lot with React and as its advantages become clearer to me, I’m more and more willing to dive into this path of learning to build user interfaces powered with the library.</p>
+
+<p>As you may know, <a href="https://reactjs.org">React</a> is a JavaScript library with which you can build complex interactive UIs following a component-based approach. It uses techniques and concepts that focus on making the interaction with the interface a more efficient task. By using a concept called virtual Dom, which is a lightweight representation of the real DOM, React makes interaction with the interface a really fast task, since for every change it compares the virtual DOM to the real DOM and updates only the portion that has changed.</p>
+
+<p>Alright, so that is only one of the reasons why React is much more powerful than other libraries when you use it to build UIs. As in this post I’ll focus on a real example of using React, you can look at the <a href="https://reactjs.org/docs/hello-world.html">documentation</a> if you find yourself lost while reading the code or if you don’t know any concepts mentioned here.</p>
+
+<h4 id="component-based-thinking">Component-based thinking</h4>
+
+<p>One of the first things to do when you start creating a UI, is to think about it as a set of components that will wrap parts of your interface and then work together to create a good user experience, that is one of the things React does to you, it changes the way you organize your apps.</p>
+
+<p>If you look at the header image for this post you’ll get the idea of what we are going to build here. It looks really simple, right? And it, in fact, can be simple since we are using React :)</p>
+
+<p>You should be aware that there are tons of ways of doing an image carousel in React, regarding the way you organize components and even how many components you create. For this example I decided to create three basic components, the first, the <code class="highlighter-rouge">Carousel</code> component, will be the wrapper for the entire layout and logic, the second, <code class="highlighter-rouge">ImageSlide</code> component, will simply render the image slides for the carousel, and the third will be the <code class="highlighter-rouge">Arrow</code> component, which will act as both the right and left arrows for the carousel transition. So, with that, you will have an instance of the <code class="highlighter-rouge">ImageSlide</code> for each image you give as the input for the carousel and two instances of the <code class="highlighter-rouge">Arrow</code> component, one for each arrow.</p>
+
+<p>First things first, let’s build the <code class="highlighter-rouge">Carousel</code> component.</p>
+
+<h4 id="the-carousel-component">The <code class="highlighter-rouge">Carousel</code> component</h4>
+<p>Before anything, you have to tell React in which part of your HTML file you want it to render your component.</p>
+
+<p>In your HTML file, add this:</p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+  <span class="c">&lt;!-- Your component will be rendered here. --&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre>
+</div>
+
+<p>In your JavaScript file, enter this:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+  <span class="o">&lt;</span><span class="nx">Carousel</span> <span class="o">/&gt;</span><span class="p">,</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'container'</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre>
+</div>
+
+<p>As you see, we are binding the div container to the Carousel component, so React will use that placeholder to render your entire component.</p>
+
+<p>Notice that you have to have the <code class="highlighter-rouge">React</code> and <code class="highlighter-rouge">ReactDOM</code> libraries available for you in your script. If you are trying this out in some sort of Code Playground such as <a href="https://codepen.io">CodePen</a> or <a href="https://jsfiddle.net">JsFiddle</a> you can simply add the relevant scripts in the settings section. However, if you have a setup for React development on your local machine you probably know what to do :)</p>
+
+<p>Now it’s time to set up our <code class="highlighter-rouge">Carousel</code> component.</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kr">class</span> <span class="nx">Carousel</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">render</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">"carousel"</span><span class="o">&gt;&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Here we are creating a simple wrapper class that will be responsible to handle all the logic you’ll have in your interface. The render method of this class will be responsible to return the markup for your entire layout, so we’ll add all the other components to the <code class="highlighter-rouge">div</code> block being returned.</p>
+
+<p>You should notice that here we are extending the <code class="highlighter-rouge">React.Component</code> class in order to declare that this specific class is going to be a React component. It is important to point that this is the ES6 equivalent of the <code class="highlighter-rouge">React.createClass</code> method. The former is just a “syntactic sugar” provided in the ES6 set of features. With that, you’ll have several differences while implementing your component methods. Check this well written <a href="https://toddmotto.com/react-create-class-versus-component/#reactcreateclass">post</a> by Todd Motto to see the details of each option.</p>
+
+<p>As we already have the setup for the <code class="highlighter-rouge">Carousel</code> class, we should start looking at what we are going to render inside of it.</p>
+
+<h4 id="the-imageslide-component">The <code class="highlighter-rouge">ImageSlide</code> component</h4>
+
+<p>This is going to be a really simple component, with no logic attached to it. This is a common pattern while building components in React and these types are known as <code class="highlighter-rouge">stateless</code> or <code class="highlighter-rouge">functional</code> components. The reason for that is due to the inexistence of a logic to control the state of those components, since they do not have a declared state. They end up being simply JavaScript functions that receive parameters (or not) and return a markup built based upon those input values (or not).</p>
+
+<p>Let’s see what the <code class="highlighter-rouge">ImageSlide</code> component looks like.</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kr">const</span> <span class="nx">ImageSlide</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">url</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">styles</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">backgroundImage</span><span class="p">:</span> <span class="err">`</span><span class="nx">url</span><span class="p">(</span><span class="nx">$</span><span class="p">{</span><span class="nx">url</span><span class="p">})</span><span class="err">`</span><span class="p">,</span>
+    <span class="na">backgroundSize</span><span class="p">:</span> <span class="s1">'cover'</span><span class="p">,</span>
+    <span class="na">backgroundPosition</span><span class="p">:</span> <span class="s1">'center'</span>
+  <span class="p">};</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">"image-slide"</span> <span class="nx">style</span><span class="o">=</span><span class="p">{</span><span class="nx">styles</span><span class="p">}</span><span class="o">&gt;&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>You can see that there is not much to do with this component. It should basically receive the image URL and create the required markup so it will act as one of the slides in our carousel.</p>
+
+<p><code class="highlighter-rouge">ImageSlide</code> is a function that receives a String, which is the image URL, creates an object that will describe how the component should be styled and returns the markup filled with the info we provided. As mentioned, you will have one instance of this component for each URL you provide in the array of images.</p>
+
+<p>Regarding the style of this component, you can see that the image is being set as its background. However, it is up to you to style your component as you want, it won’t affect the purpose of this post.</p>
+
+<p>So after creating the markup for the image slides, we should add it to the render method in the <code class="highlighter-rouge">Carousel</code> component.</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kr">class</span> <span class="nx">Carousel</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">render</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">"carousel"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">ImageSlide</span> <span class="nx">url</span><span class="o">=</span><span class="p">{</span> <span class="nx">imgUrl</span> <span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>The URL is passed to the <code class="highlighter-rouge">ImageSlide</code> component as a property in the <code class="highlighter-rouge">props</code> object. Later in this post, we’ll see how to properly get the image URL form the array of images used as a reference.</p>
+
+<h4 id="the-arrow-component">The <code class="highlighter-rouge">Arrow</code> component</h4>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kr">const</span> <span class="nx">Arrow</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">direction</span><span class="p">,</span> <span class="nx">clickFunction</span><span class="p">,</span> <span class="nx">glyph</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span>
+  <span class="o">&lt;</span><span class="nx">div</span>
+    <span class="nx">className</span><span class="o">=</span><span class="p">{</span> <span class="err">`</span><span class="nx">slide</span><span class="o">-</span><span class="nx">arrow</span> <span class="nx">$</span><span class="p">{</span><span class="nx">direction</span><span class="p">}</span><span class="err">`</span> <span class="p">}</span>
+    <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span> <span class="nx">clickFunction</span> <span class="p">}</span><span class="o">&gt;</span>
+    <span class="p">{</span> <span class="nx">glyph</span> <span class="p">}</span>
+  <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p>This component is even simpler since we don’t have to setup anything before returning its markup. I decided to use three properties here because this component is being used both for the left arrow and the right one. Due to that, its implementation should be a little more generic. The <code class="highlighter-rouge">direction</code> property will tell the component which class to use for each instance (<code class="highlighter-rouge">left</code> or <code class="highlighter-rouge">right</code>). The <code class="highlighter-rouge">clickFunction</code> describes what should happen when each arrow is clicked and finally the <code class="highlighter-rouge">glyph</code> component refers to what will be the content of this component, that means what will be rendered.</p>
+
+<p>With that, let’s add both arrows to the <code class="highlighter-rouge">Carousel</code> component.</p>
+
+<pre><code class="language-javaScript">class Carousel extends React.Component {
+  render () {
+    return (
+      &lt;div className="carousel"&gt;
+        &lt;Arrow
+          direction="left"
+          clickFunction={ this.previousSlide }
+          glyph="&amp;#9664;" /&gt;
+
+        &lt;ImageSlide url={ imgUrl } /&gt;
+
+        &lt;Arrow
+          direction="right"
+          clickFunction={ this.nextSlide }
+          glyph="&amp;#9654;" /&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+</code></pre>
+
+<p>From here we can have a better idea of the final markup we’ll have for our carousel.</p>
+
+<p>Next, we should go back to the <code class="highlighter-rouge">Carousel</code> component since there are still several things to finish.</p>
+
+<p>You notice that we are passing two different functions to the <code class="highlighter-rouge">Arrow</code>s components. Those are responsible for handling the transition of slides. But how do they do that?</p>
+
+<p>First, we should look at the states we need to create in order to tell the wrapper component which image it should render at each time. So, let’s set up the <code class="highlighter-rouge">constructor</code> function so we can create the initial state for the <code class="highlighter-rouge">Carousel</code> component.</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kr">class</span> <span class="nx">Carousel</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">constructor</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="na">currentImageIndex</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+
+  <span class="nx">render</span> <span class="p">()</span> <span class="p">{...}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>The first thing to do within the <code class="highlighter-rouge">constructor</code> function is to call <code class="highlighter-rouge">super()</code> passing it the props as a parameter, in case you want to access properties through the <code class="highlighter-rouge">this</code> keyword within this context. For now, it is optional to send the <code class="highlighter-rouge">props</code> object since we are not using props within the constructor.</p>
+
+<p>Initially, we are setting a state called <code class="highlighter-rouge">currentImageIndex</code> set to <code class="highlighter-rouge">0</code>. This is going to hold the current index for the image that has to be rendered on the screen at each time. Here we are starting from the first image in the images array.</p>
+
+<p>This state is going to be used to get the correct URL passed to the <code class="highlighter-rouge">ImageSlide</code> component. Let’s check how to do that.</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kr">class</span> <span class="nx">Carousel</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">constructor</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{...}</span>
+
+  <span class="nx">render</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">"carousel"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">Arrow</span> <span class="p">...</span><span class="o">/&gt;</span>
+
+        <span class="o">&lt;</span><span class="nx">ImageSlide</span> <span class="nx">url</span><span class="o">=</span><span class="p">{</span> <span class="nx">imgUrls</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">currentImageIndex</span><span class="p">]</span> <span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
+</span>
+        <span class="o">&lt;</span><span class="nx">Arrow</span> <span class="p">...</span><span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>After this, all we have to do is to tell the component how to update that state according to user interaction. That work is related to our <code class="highlighter-rouge">Arrow</code> components, and since we are already passing two functions (<code class="highlighter-rouge">previousSlide</code> and <code class="highlighter-rouge">nextSlide</code>) as properties, we now have to implement them.</p>
+
+<p>You will notice that these two functions are analogous. All they do is to update the <code class="highlighter-rouge">currentImageIndex</code> state by one, either by adding or removing from it. There is only one detail to point here. There will be situations in which we will have to reset the value for the current index since it will at some point reach the maximum or the minimum index for the array of images. Therefore, it is important to check the length of the array in order to know whether we should reset the index or not.</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kr">class</span> <span class="nx">Carousel</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">constructor</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{...}</span>
+
+  <span class="nx">previousSlide</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">lastIndex</span> <span class="o">=</span> <span class="nx">imgUrls</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kr">const</span> <span class="p">{</span> <span class="nx">currentImageIndex</span> <span class="p">}</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">;</span>
+    <span class="kr">const</span> <span class="nx">shouldResetIndex</span> <span class="o">=</span> <span class="nx">currentImageIndex</span> <span class="o">===</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kr">const</span> <span class="nx">index</span> <span class="o">=</span>  <span class="nx">shouldResetIndex</span> <span class="p">?</span> <span class="nx">lastIndex</span> <span class="p">:</span> <span class="nx">currentImageIndex</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+      <span class="na">currentImageIndex</span><span class="p">:</span> <span class="nx">index</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="nx">nextSlide</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">lastIndex</span> <span class="o">=</span> <span class="nx">imgUrls</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kr">const</span> <span class="p">{</span> <span class="nx">currentImageIndex</span> <span class="p">}</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">;</span>
+    <span class="kr">const</span> <span class="nx">shouldResetIndex</span> <span class="o">=</span> <span class="nx">currentImageIndex</span> <span class="o">===</span> <span class="nx">lastIndex</span><span class="p">;</span>
+    <span class="kr">const</span> <span class="nx">index</span> <span class="o">=</span>  <span class="nx">shouldResetIndex</span> <span class="p">?</span> <span class="mi">0</span> <span class="p">:</span> <span class="nx">currentImageIndex</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+      <span class="na">currentImageIndex</span><span class="p">:</span> <span class="nx">index</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="nx">render</span> <span class="p">()</span> <span class="p">{...}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>For the <code class="highlighter-rouge">previousSlide</code> function you can notice that the reset condition is set to be the case in which the <code class="highlighter-rouge">currentImageIndex</code> state is <code class="highlighter-rouge">0</code>, which means that if the index is pointing to the first image in the array and then the user clicks the left arrow, the index should then point to the last image in the array (<code class="highlighter-rouge">imgUrls.length - 1</code>).</p>
+
+<p>The <code class="highlighter-rouge">nextSlide</code> does quite the same, the difference is that if the index is currently pointing at the last image, then it should be reset to point at the first (<code class="highlighter-rouge">index = 0</code>).</p>
+
+<p>In all the remaining situations both methods simply change the mentioned state by one in order to get the previous or next image.</p>
+
+<p>At last, there is one important thing to notice here. In order to update states in a React component, we have to use the <code class="highlighter-rouge">setState</code> method. This method is responsible for telling React that it should update that component and its children. This is the primary way of updating your user interface.</p>
+
+<p>Therefore, whenever you click on the left or right arrow, you are basically updating the state of the <code class="highlighter-rouge">currentImageIndex</code> and consequently updating your interface with the new image slide.</p>
+
+<p>However, in order to access the <code class="highlighter-rouge">this</code> keyword within those two functions, you have to properly bind the context to them. A common way to do that is in the component’s <code class="highlighter-rouge">constructor</code> method.</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kr">class</span> <span class="nx">Carousel</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">constructor</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">...</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">nextSlide</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">nextSlide</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">previousSlide</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">previousSlide</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">previousSlide</span> <span class="p">()</span> <span class="p">{...}</span>
+
+  <span class="nx">nextSlide</span> <span class="p">()</span> <span class="p">{...}</span>
+
+  <span class="nx">render</span> <span class="p">()</span> <span class="p">{...}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Finally, we have implemented all the logic for our carousel component. You can take a look at the working demo and the full version of the code in <a href="https://codepen.io/willamesoares/full/PQpEzx/">this codepen</a>.</p>
+
+<p>PS1.: as it was not the purpose of the post, I omitted the styles used for the components, thus if you are interested in that you should take a look at the codepen mentioned above.</p>
+
+<p>PS2.: I still want to add some animation to the slides transition, but I want to do it properly in the React way, so that will probably be a new post :)</p>
+
+<p>Thanks for reading, folks!</p>
+
+      </div>
+      <div class="separator"></div>
+    </div>
+  </div>
+</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

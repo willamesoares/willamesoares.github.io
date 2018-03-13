@@ -9,10 +9,6 @@ description: Tips for resolving conflicts automatically
 image:       /images/posts/git/part1/lickedit.png
 ---
 
-<div class="center-align">
-  <img class="responsive-img" src="/images/posts/git/part1/lickedit.png">
-</div>
-
 In this article, I will assume that you already have a basic understanding of Git and consequently is familiar with the process of sharing code when you are working in a team. If you do not know about that, I would suggest you to read more about those topics [here](https://backlogtool.com/git-guide/en/) and [here](https://blog.codeminer42.com/git-workflow-basics-d405746f6205) before going through this post.  
 
 If you are here on purpose, you probably know that this article relates to a really cumbersome situation that you constantly get into when trying to share your code with coworkers, who are working in the same repository. We all know that those situations, known as conflicts, may become a lot harder or time-consuming depending on the number of changes we are trying to commit.  

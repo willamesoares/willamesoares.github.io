@@ -9,10 +9,6 @@ description: Tips for resolving conflicts automatically
 image:       /images/posts/git/part2/mine.jpg
 ---
 
-<div class="center-align">
-  <img class="responsive-img" src="/images/posts/git/part2/mine.jpg">
-</div>
-
 In the [previous post](/git/git-ours-or-theirs-1.html) you were presented to a basic workflow used to automatically handle merge conflicts. It was also explained why and when you would want to do that. However, it is important to notice that, before using this method, you should be completely aware of what you are doing. In fact, whenever I get conflicts when trying to do a `pull` or a `rebase`, I use to check each one of them to see if I will be able to handle the situation quickly by using some strategy, such as using the `--ours` or `--theirs` option.
 
 Furthermore, I also warned you that, although it might have looked a really simple strategy, there are cases in which that same strategy would provide you with different outcomes, depending on which action you are using to merge the commits.
