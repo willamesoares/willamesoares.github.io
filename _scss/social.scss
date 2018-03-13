@@ -1,0 +1,30 @@
+.social {
+
+  &__icons img {
+    width: 2em;
+    margin: 0.4em;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+}
+
+@media (max-width: 480px) {
+  .social {
+
+    &__icons {
+      margin-bottom : 1rem;
+    }
+  }
+}
+
+@media (max-width: 1440px) {
+  .social {
+
+    &__icons img {
+      width: 1.6rem;
+    }
+  }
+}

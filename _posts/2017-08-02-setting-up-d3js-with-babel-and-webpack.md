@@ -3,11 +3,12 @@ layout:      post
 title:       "Setting Up D3.js with Babel and Webpack"
 author:      Will Soares
 description: Learn how to setup D3 with webpack for live reloading
-category:    D3
+categories:  tech
+tags:        [D3, webpack]
 image:       /images/posts/d3/d3logo.png
 ---
 
-<div class="center-align">
+<div class="center-align bordered">
   <img class="responsive-img" src="/images/posts/d3/d3logo.png">
 </div>
 
@@ -19,7 +20,7 @@ In fact, what truly pushed me to going for this setup was that I find it really 
 
 Enough motivational talk, let's get into some details and concepts for this project setup. You can take a look at its [Github repository](https://github.com/willamesoares/learn-d3) and check the files as you read.
 
-##### D3.js  
+##### D3.js
 As you may know, D3.js is a JavaScript library that uses HTML, SVG, and CSS to create visualization sets for data driven documents. You can see some amazing data visualizations created with D3 in their [gallery](https://github.com/d3/d3/wiki/Gallery).
 
 ##### Webpack and webpack-dev-server

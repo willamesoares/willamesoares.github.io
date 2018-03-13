@@ -1,0 +1,15 @@
+.tags {
+
+  &__item-name {
+    margin-bottom: 1.2rem;
+    padding-left: 1rem;
+
+    a {
+      color: $dark-blue;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

@@ -3,7 +3,8 @@ layout:      post
 title:       "Git: Ours or Theirs? (part&nbsp;1)"
 author:      Will Soares
 date:        2017-03-31
-categories:  Git
+categories:  tech
+tags:        git
 description: Tips for resolving conflicts automatically
 image:       /images/posts/git/part1/lickedit.png
 ---
@@ -76,7 +77,9 @@ With that you have used a strategy to resolve conflicts that may happen when doi
 
 It is important to notice that you must be careful when resolving conflicts this way. One must be sure about which changes should be kept and which ones should be ignored before doing it automatically. Besides, those options can be a little bit tricky in different situations. The one described here is specific to a merge process and should not be mistaken for cases when you are doing a rebase , for instance. But that is going to be discussed later in another post. Stay tuned!
 
-...
+<div class="dots-divider">
+  ...
+</div>
 
 In the meantime, if you want to learn more about the options and the other commands discussed you can take a look [here](https://git-scm.com/book/tr/v2/Git-Tools-Advanced-Merging).  
 

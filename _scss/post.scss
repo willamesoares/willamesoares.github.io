@@ -1,0 +1,38 @@
+.post {
+  overflow: auto;
+  
+  &__body {
+    padding: 0 2rem;
+  }
+
+  &__content {
+    font-size: 1.2rem;
+  }
+
+  &__list {
+    padding: 0 2rem;
+  }
+
+  &__item {
+    margin-top: 2rem;
+  }
+
+  &__title {
+    color: $dark-blue;
+		cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .post {
+
+    &__list,
+    &__body {
+      padding: 0;
+    }
+  }
+}

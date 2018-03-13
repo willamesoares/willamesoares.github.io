@@ -1,34 +1,12 @@
-body {
-  display: flex;
-  font-size: 16px;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-main {
-  flex: 1 0 auto;
-}
-
-nav {
-  background-color: $primary-color;
-
-  a, p, span {
-    color: $secondary-color;
-  }
-}
-
-article {
-  margin-top: 8em;
-  margin-bottom: 4em;
-}
-
-header.article-page {
-  position: fixed;
+body, html {
+  height: 100%;
   width: 100%;
 }
 
-.container {
-  @media (min-width: 1440px) {
-    width: 50%;
-  }
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  min-height: 100vh;
 }

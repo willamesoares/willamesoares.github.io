@@ -2,7 +2,8 @@
 <html lang="en" prefix="og: http://ogp.me/ns#">
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow">
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow"> -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,400i,700" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
@@ -12,7 +13,7 @@
     <title>Git: Ours or Theirs? (part&nbsp;2)</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta property="og:url" content="http://0.0.0.0:4000/git/git-ours-or-theirs-2.html">
+    <meta property="og:url" content="http://willamesoares.com/tech/git-ours-or-theirs-2/">
     <meta property="og:site_name" content="Will Soares">
 
     
@@ -54,43 +55,67 @@
   </head>
 
   <body>
-
-    
-
-    <header class="article-page">
-      <div class="header">
-        <nav class="navbar navbar-default navbar-static-top">
-          <div class="container home__nav">
-            <div class="navbar-header home__nav__content">
-              
-              <a class="navbar-brand" href="/"><img class="home__img home__img--small" src="/images/profile.jpg"></a>
-              
-
+    <div class="container-fluid full-height">
+      <div class="row no-margin full-height">
+        <div class="col s12 m3 sidemenu profile">
+          <a  href="/" class="hide-on-small-only">
+            <div class="profile__image-wrapper">
+              <img class="profile__image" src="/images/profile.png">
             </div>
-            <!-- /.navbar-header  -->
+          </a>
+          <h4 class="profile__name">
+            <a href="/"><b>Will Soares</b></a>
+          </h4>
+          <div class="separator separator-fixed"></div>
+          <p class="sidemenu__headline center-align">Front-end Developer and Computer Scientist</p>
+          <div class="social__icons">
+            <a href="https://twitter.com/Willame_soares" target="_blank">
+              <img src="/images/svg/twitter.svg" alt="Twitter">
+            </a>
+            <a href="https://www.linkedin.com/in/willamesoares/?locale=en_US" target="_blank">
+              <img src="/images/svg/linkedin.svg" alt="Facebook">
+            </a>
+            <a href="https://github.com/willamesoares" target="_blank">
+              <img src="/images/svg/github.svg" alt="Google Plus">
+            </a>
+            <a href="https://codepen.io/willamesoares" target="_blank">
+              <img src="/images/svg/codepen.svg" alt="Github">
+            </a>
           </div>
-          <!-- /.container -->
-        </nav>
-        <!-- /.navbar navbar-default navbar-static-top -->
-      </header>
-      <!-- /.header -->
-
-      <main class="container">
-
-        <article>
-    <header>
-        <h3 class="left-align">Git: Ours or Theirs? (part&nbsp;2)</h3>
-        <div class="post-info">
-            <div class="author-published">
-                by Will Soares
-            </div>
-            <div class="date-published">
-                <time datetime="2017-04-05 00:00:00 +0000">April 05, 2017</time>
-            </div>
         </div>
-    </header>
+        <!-- /.sidemenu -->
 
-    <div><div class="center-align">
+        <div class="col s12 m9 post full-height">
+          <div class="post__section">
+            <div  class="row">
+  <div class="col s12 l8 margin-bottom margin-top">
+    <div class="post__body">
+      <div  class="post__header">
+        <h3 class="left-align">Git: Ours or Theirs? (part&nbsp;2)</h3>
+        <div class="post__info">
+          <div class="author-published">
+            by Will Soares
+          </div>
+          <div class="date-published">
+            <time datetime="2017-04-05 00:00:00 -0500">April 05, 2017</time>
+          </div>
+
+          
+          <a href="/categories#tech">
+            <small class="badge badge--category">tech</small>
+          </a>
+          
+
+          
+          <a href="/tags#git">
+            <small class="badge badge--tag">git</small>
+          </a>
+          
+
+        </div>
+      </div>
+      <div class="post__content">
+        <div class="center-align">
   <img class="responsive-img" src="/images/posts/git/part2/mine.jpg" />
 </div>
 
@@ -113,8 +138,9 @@
 
 <p>Then, from within the <code class="highlighter-rouge">my-new-feature</code> you start rebasing you branch by running the command below:</p>
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="o">(</span>my-new-feature<span class="o">)</span> git rebase old-feature
-</code></pre></div></div>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="o">(</span>my-new-feature<span class="o">)</span> git rebase old-feature
+</code></pre>
+</div>
 
 <p>At this point, we have the key to learn how to properly use the <code class="highlighter-rouge">ours</code> and <code class="highlighter-rouge">theirs</code> options when doing a rebase.</p>
 
@@ -134,8 +160,9 @@
 
 <p>Let’s consider that, during the rebase, you get tons of conflicts, again, in the <code class="highlighter-rouge">index.html</code> file. Fortunately, you are sure that you can keep all of your changes and just ignore the changes coming from the remote branch. And you also understand that you should change your strategy a little in this scenario. Thus you go ahead and resolve the conflicts, keeping your changes, by running the command below.</p>
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">$(</span>old-feature<span class="k">)</span> git checkout <span class="nt">--theirs</span> index.html
-</code></pre></div></div>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="k">$(</span>old-feature<span class="k">)</span> git checkout --theirs index.html
+</code></pre>
+</div>
 
 <p>Notice, again, that the <code class="highlighter-rouge">--theirs</code> option here refers to your changes in <code class="highlighter-rouge">my-new-feature</code>.</p>
 
@@ -148,13 +175,16 @@
 <p>I hope now you understand how to automate the tedious task of handling conflicts when working with Git. Also, I expect you to be careful and only use such strategies when you know what you are doing.</p>
 
 <p>Thanks for reading!</p>
+
+      </div>
+      <div class="separator"></div>
+    </div>
+  </div>
 </div>
 
-</article>
-
-
-      </main>
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- /.home -->
   </body>
 </html>

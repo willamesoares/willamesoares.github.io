@@ -1,0 +1,52 @@
+.full-height {
+	height: 100%;
+}
+
+.center-align {
+	text-align: center;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.margin-bottom {
+	margin-bottom: 2rem;
+}
+
+.margin-top {
+	margin-top: 2rem;
+}
+
+.bordered {
+	border: .3rem solid $dark-blue;
+}
+
+.badge {
+	border-radius: .1rem;
+	color: white;
+	padding: .1rem .5rem;
+
+	&--tag {
+		background-color: $blue;
+	}
+
+	&--category {
+		background-color: $dark-blue;
+	}
+}
+
+.dots-divider {
+  font-size: 2rem;
+  letter-spacing: 1rem;
+  text-align: center;
+}
+
+.separator {
+	background-color: $dark-blue;
+	height: .3rem;
+
+	&-fixed {
+		width: 5rem;
+	}
+}

@@ -1,0 +1,20 @@
+.sidemenu {
+  align-items: center;
+  background-color: $blue;
+	box-shadow: .01875rem .1rem .5rem gray;
+	display: flex;
+	flex-direction: column;
+  height: 100%;
+	padding-top: 3rem;
+
+  &__headline {
+    margin: 1rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidemenu {
+    height: auto;
+    padding: 1rem 0;
+  }
+}
