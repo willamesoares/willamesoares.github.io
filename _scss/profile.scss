@@ -9,17 +9,19 @@
   }
 
   &__image-wrapper {
+    background-color: white;
     border: .3rem solid $dark-blue;
+    border-radius: 50%;
+    height: 12rem;
   	margin: 4rem 0 0;
-  	padding-top: 3rem;
-  	background-color: white;
   	overflow: hidden;
+    width: 12rem;
   }
 
   &__image {
-    height: 13rem;
+    height: 100%;
     position: relative;
-    top: .5rem;
+    top: 0;
   }
 }
 
@@ -34,10 +36,6 @@
 
 @media (max-width: 1440px) {
   .profile {
-
-    &__image {
-      height: 10rem;
-    }
 
     &__name {
       font-size: 2rem;

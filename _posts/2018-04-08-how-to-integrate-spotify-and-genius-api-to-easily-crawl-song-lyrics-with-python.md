@@ -24,7 +24,7 @@ For the long-term Spotify users, you probably remember when Spotify had the func
 
 From here I will start to tear apart the script following the order it was implemented. If you want to check the full script before continuing, you can go to [this repository](https://github.com/willamesoares/lyrics-crawler) on Github. There, you will also have instructions on how to run it, but keep in mind that I will guide you through that in this post as well :)
 
-### Connecting to Spotify
+#### Connecting to Spotify
 
 This was one of the things I had no clue how to do it so I had to do some googling to accomplish that. Luckily, this [answer](https://stackoverflow.com/questions/33883360/get-spotify-currently-playing-track/33923095#33923095) by [jooon](https://stackoverflow.com/users/1014870/jooon) on Stackoverflow saved me a lot of time, so _kudos_ to you sir.
 
@@ -56,7 +56,7 @@ In the code above we a simply creating a `SessionBus` instance and using that to
 
 From that connection, we can extract the metadata for that session, which will provide us with lots of info about the current Spotify session, including the name of the artist and song currently playing, which is what we need. Notice that this method returns a dictionary with two keys, `artist` and `title`.
 
-### Connecting to Genius API
+#### Connecting to Genius API
 
 Since we already have the name of artist and song we want to search, we can go ahead and make a request to the Genius API.
 
@@ -81,7 +81,7 @@ def request_song_info(song_title, artist_name):
 This method receives the song and artist name we extracted from the Spotify session and sends a request to the Genius API. Notice we are using the [requests](http://docs.python-requests.org/en/master/) HTTP library to send a GET request.  
 
 
-### Extracting the song lyrics
+#### Extracting the song lyrics
 
 If everything works fine, you will have now a response object that contains tons of information about all the matches that were found in the API.
 
@@ -134,7 +134,7 @@ We finally have the lyrics to print out to the console. Tha cool thing is that d
   <img class="responsive-img" src="/images/posts/spotify/lyric_example.png">
 </div>
 
-### How to use the Github repository
+#### How to use the Github repository
 
 All the methods mentioned in this post are available in this [repository](https://github.com/willamesoares/lyrics-crawler).
 

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+  <head>
+    <meta charset="utf-8">
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow"> -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>How to integrate Spotify and Genius API to easily crawl song lyrics with Python</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta property="og:url" content="http://willamesoares.com/tech/how-to-integrate-spotify-and-genius-api-to-easily-crawl-song-lyrics-with-python/">
+    <meta property="og:site_name" content="Will Soares">
+
+    
+    <meta property="og:title" content="How to integrate Spotify and Genius API to easily crawl song lyrics with Python">
+    
+
+    
+    <meta name="description" content="Get the lyrics for the song currently playing on Spotify">
+    <meta name="og:description" content="Get the lyrics for the song currently playing on Spotify">
+    
+
+    
+    <meta property="og:image" content="">
+    
+
+    
+
+    
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2018-04-08">
+    
+
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-96614926-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+  </head>
+
+  <body>
+    <div class="container-fluid full-height">
+      <div class="row no-margin full-height">
+        <div class="col s12 m3 sidemenu profile">
+          <a  href="/" class="hide-on-small-only">
+            <div class="profile__image-wrapper">
+              <img class="profile__image" src="/images/profile.jpg">
+            </div>
+          </a>
+          <h4 class="profile__name">
+            <a href="/"><b>Will Soares</b></a>
+          </h4>
+          <div class="separator separator-fixed"></div>
+          <p class="sidemenu__headline center-align">Front-end Developer and Computer Scientist</p>
+          <div class="social__icons">
+            <a href="https://twitter.com/Willame_soares" target="_blank">
+              <img src="/images/svg/twitter.svg" alt="Twitter">
+            </a>
+            <a href="https://www.linkedin.com/in/willamesoares/?locale=en_US" target="_blank">
+              <img src="/images/svg/linkedin.svg" alt="Facebook">
+            </a>
+            <a href="https://github.com/willamesoares" target="_blank">
+              <img src="/images/svg/github.svg" alt="Google Plus">
+            </a>
+            <a href="https://codepen.io/willamesoares" target="_blank">
+              <img src="/images/svg/codepen.svg" alt="Github">
+            </a>
+          </div>
+        </div>
+        <!-- /.sidemenu -->
+
+        <div class="col s12 m9 post full-height">
+          <div class="post__section">
+            <div  class="row">
+  <div class="col s12 l8 margin-bottom margin-top">
+    <div class="post__body">
+      <div  class="post__header">
+        <h3 class="left-align">How to integrate Spotify and Genius API to easily crawl song lyrics with Python</h3>
+        <div class="post__info">
+          <div class="author-published">
+            by Will Soares
+          </div>
+          <div class="date-published">
+            <time datetime="2018-04-08 00:00:00 -0500">April 08, 2018</time>
+          </div>
+
+          
+          <a href="/categories#tech">
+            <small class="badge badge--category">tech</small>
+          </a>
+          
+
+          
+          <a href="/tags#python">
+            <small class="badge badge--tag">python</small>
+          </a>
+          
+
+        </div>
+      </div>
+      <div class="post__content">
+        <img class="post__image" src="/images/posts/spotify/head_image.png">
+        <p>Hello, everyone!</p>
+
+<p>For this post, I decided to talk about a Python script I wrote last year, which I am still using it very often nowadays.</p>
+
+<p>This was one of those moments that you have an idea and you get really excited about it but have no clue on whether that would work as you expect or not. I started basically with some knowledge of Python and knowing which API I was going to use to accomplish that idea.</p>
+
+<p>The goal was to implement a script with which I could fetch the lyrics for the song currently playing on Spotify. So, at first, I knew I was going to need something that would provide me with an interface I could use to connect that script with the Spotify service running on my computer. Also, as I was a loyal user of <a href="https://genius.com">Genius.com</a> I knew that they have a large public API I could get some help from.</p>
+
+<p>For the long-term Spotify users, you probably remember when Spotify had the functionality to show the song lyrics within the desktop app, right? Good old times. I still don’t understand why that was removed but all we got now is the <code class="highlighter-rouge">Behind the Lyrics</code> feature, which shows some <del>useless</del> information and small snippets of the lyrics for the song we are listening (it seems it is available only on mobile devices).</p>
+
+<div class="center-align">
+  <img class="responsive-img" src="/images/posts/spotify/behind_the_lyrics.png" />
+</div>
+
+<p>From here I will start to tear apart the script following the order it was implemented. If you want to check the full script before continuing, you can go to <a href="https://github.com/willamesoares/lyrics-crawler">this repository</a> on Github. There, you will also have instructions on how to run it, but keep in mind that I will guide you through that in this post as well :)</p>
+
+<h4 id="connecting-to-spotify">Connecting to Spotify</h4>
+
+<p>This was one of the things I had no clue how to do it so I had to do some googling to accomplish that. Luckily, this <a href="https://stackoverflow.com/questions/33883360/get-spotify-currently-playing-track/33923095#33923095">answer</a> by <a href="https://stackoverflow.com/users/1014870/jooon">jooon</a> on Stackoverflow saved me a lot of time, so <em>kudos</em> to you sir.</p>
+
+<p>Basically, as I am a Linux user, the Spotify client I use automatically creates a D-Bus interface called MPRIS - Media Player Remote Interfacing Specification.</p>
+
+<p>From the <a href="https://dbus.freedesktop.org/doc/dbus-tutorial.html#whatis">D-Bus</a> specifications page, the D-Bus API is commonly used to implement a service which will be consumed by multiple client programs. This kind of message system is designed for two specific cases: communication between desktop applications in the same desktop session and communication between the desktop session and the operating system, which includes any system processes (this is our case).</p>
+
+<p>A D-Bus system has several layers and one of them is formed by wrapper libraries, which is the kind of tool we are using here. In order for the Python script to communicate with the Spotify desktop application, we will use the <a href="https://pypi.python.org/pypi/dbus-python/1.2.4">dbus-python</a> wrapper library or technically called a <code class="highlighter-rouge">binding</code> for the <code class="highlighter-rouge">libdbus</code> library. After having that library installed in your system you can use the <code class="highlighter-rouge">dbus</code> module to create a <code class="highlighter-rouge">SessionBus</code> which we will use to communicate with Spotify.</p>
+
+<p>If you are on Ubuntu and, for any reason, you do not have the <code class="highlighter-rouge">dbus-python</code> installed, you can install it by running: <code class="highlighter-rouge">apt-get install python-dbus</code></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">dbus</span>
+
+<span class="k">def</span> <span class="nf">get_current_song_info</span><span class="p">():</span>
+    <span class="c"># kudos to jooon from this stackoverflow question http://stackoverflow.com/a/33923095</span>
+    <span class="n">session_bus</span> <span class="o">=</span> <span class="n">dbus</span><span class="o">.</span><span class="n">SessionBus</span><span class="p">()</span>
+    <span class="n">spotify_bus</span> <span class="o">=</span> <span class="n">session_bus</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="s">'org.mpris.MediaPlayer2.spotify'</span><span class="p">,</span>
+                                         <span class="s">'/org/mpris/MediaPlayer2'</span><span class="p">)</span>
+    <span class="n">spotify_properties</span> <span class="o">=</span> <span class="n">dbus</span><span class="o">.</span><span class="n">Interface</span><span class="p">(</span><span class="n">spotify_bus</span><span class="p">,</span>
+                                        <span class="s">'org.freedesktop.DBus.Properties'</span><span class="p">)</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="n">spotify_properties</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="s">'org.mpris.MediaPlayer2.Player'</span><span class="p">,</span> <span class="s">'Metadata'</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="s">'artist'</span><span class="p">:</span> <span class="n">metadata</span><span class="p">[</span><span class="s">'xesam:artist'</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s">'title'</span><span class="p">:</span> <span class="n">metadata</span><span class="p">[</span><span class="s">'xesam:title'</span><span class="p">]}</span>
+</code></pre>
+</div>
+
+<p>In the code above we a simply creating a <code class="highlighter-rouge">SessionBus</code> instance and using that to create an <code class="highlighter-rouge">Interface</code> with the Spotify application.</p>
+
+<p>From that connection, we can extract the metadata for that session, which will provide us with lots of info about the current Spotify session, including the name of the artist and song currently playing, which is what we need. Notice that this method returns a dictionary with two keys, <code class="highlighter-rouge">artist</code> and <code class="highlighter-rouge">title</code>.</p>
+
+<h4 id="connecting-to-genius-api">Connecting to Genius API</h4>
+
+<p>Since we already have the name of artist and song we want to search, we can go ahead and make a request to the Genius API.</p>
+
+<p>For that, we need an access token, which we can get by creating a Genius API client. First, we have to <a href="https://genius.com/signup_or_login">sign up</a> for an account (or sign in if you already have an account on Genius). After that, you can go to the Genius API documentation page in order to <a href="https://genius.com/api-clients">manage your clients</a>. The process to create a new client is pretty straightforward and after that, you will finally get your access token.</p>
+
+<p>Once you have your access token we can implement the next method.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="k">def</span> <span class="nf">request_song_info</span><span class="p">(</span><span class="n">song_title</span><span class="p">,</span> <span class="n">artist_name</span><span class="p">):</span>
+    <span class="n">base_url</span> <span class="o">=</span> <span class="s">'https://api.genius.com'</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'Bearer '</span> <span class="o">+</span> <span class="s">'INSERT YOUR TOKEN HERE'</span><span class="p">}</span>
+    <span class="n">search_url</span> <span class="o">=</span> <span class="n">base_url</span> <span class="o">+</span> <span class="s">'/search'</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'q'</span><span class="p">:</span> <span class="n">song_title</span> <span class="o">+</span> <span class="s">' '</span> <span class="o">+</span> <span class="n">artist_name</span><span class="p">}</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">search_url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">response</span>
+
+</code></pre>
+</div>
+
+<p>This method receives the song and artist name we extracted from the Spotify session and sends a request to the Genius API. Notice we are using the <a href="http://docs.python-requests.org/en/master/">requests</a> HTTP library to send a GET request.</p>
+
+<h4 id="extracting-the-song-lyrics">Extracting the song lyrics</h4>
+
+<p>If everything works fine, you will have now a response object that contains tons of information about all the matches that were found in the API.</p>
+
+<p>Due to the object shape we got from the request, we will have to iterate over the <code class="highlighter-rouge">hits</code> key in that object and look for an exact match using the <code class="highlighter-rouge">artist_name</code> variable.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># Search for matches in the request response</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">request_song_info</span><span class="p">(</span><span class="n">song_title</span><span class="p">,</span> <span class="n">artist_name</span><span class="p">)</span>
+    <span class="n">json</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="n">remote_song_info</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">for</span> <span class="n">hit</span> <span class="ow">in</span> <span class="n">json</span><span class="p">[</span><span class="s">'response'</span><span class="p">][</span><span class="s">'hits'</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">artist_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">hit</span><span class="p">[</span><span class="s">'result'</span><span class="p">][</span><span class="s">'primary_artist'</span><span class="p">][</span><span class="s">'name'</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="n">remote_song_info</span> <span class="o">=</span> <span class="n">hit</span>
+            <span class="k">break</span>
+</code></pre>
+</div>
+
+<p>If we successfully have a match in that object, it means that the song we look for is available in the API and is now available in the <code class="highlighter-rouge">remote_song_info</code> variable.</p>
+
+<p>Even though we have all of that information about a specific song, guess what, we do not have the LYRICS!! Exactly, the Genius API (as for the date this script was implemented) does not directly offer you the lyrics for a song. There is no endpoint to search for lyrics, as well.</p>
+
+<p>In order to bypass that situation, we would have to, in fact, crawl the web page in which that song is available. In the <code class="highlighter-rouge">remote_song_info</code>, you will have the URL for that song.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># Extract lyrics from URL if the song was found</span>
+<span class="k">if</span> <span class="n">remote_song_info</span><span class="p">:</span>
+    <span class="n">song_url</span> <span class="o">=</span> <span class="n">remote_song_info</span><span class="p">[</span><span class="s">'result'</span><span class="p">][</span><span class="s">'url'</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<p>From here we basically have to make our script access that page and crawl the lyrics for us.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+
+<span class="k">def</span> <span class="nf">scrap_song_url</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="n">page</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s">'html.parser'</span><span class="p">)</span>
+    <span class="n">lyrics</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">'div'</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">'lyrics'</span><span class="p">)</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">lyrics</span>
+</code></pre>
+</div>
+
+<p>This method receives the song URL and uses the <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">Beautiful Soup</a> library to pull data from HTML files in an easier way.</p>
+
+<p>During the implementation of this method, I had to analyze what was the structure for the HTML returned in order to figure out what I could use to extract only the text that represents the lyrics of the song. I ended up using the <code class="highlighter-rouge">div</code> that contains the class <code class="highlighter-rouge">lyrics</code>, which holds all the song lyrics. I hope they will never change the markup for that :)</p>
+
+<p>We finally have the lyrics to print out to the console. Tha cool thing is that during the crawling process each line in the lyrics automatically receives a new line escape sequence (<code class="highlighter-rouge">\n</code>). With that, we get a good looking structure in the terminal.</p>
+
+<div class="center-align">
+  <img class="responsive-img" src="/images/posts/spotify/lyric_example.png" />
+</div>
+
+<h4 id="how-to-use-the-github-repository">How to use the Github repository</h4>
+
+<p>All the methods mentioned in this post are available in this <a href="https://github.com/willamesoares/lyrics-crawler">repository</a>.</p>
+
+<p>In order to use it locally, you can simply clone the repository, add your access token to the <code class="highlighter-rouge">token.txt</code> file and from within the repo folder you can run the command below to get the lyrics for a song. Remember to open Spotify and play something :)</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>python get-lyric.py
+</code></pre>
+</div>
+
+<p>The script should work with both Python 2.7 and Python 3. However, you should check which version you are using and which one you used to install the dependencies.</p>
+
+<p>From the repository, you get some extra functionalities, such as:</p>
+
+<ul>
+  <li>Automatically have the song lyrics available in the <code class="highlighter-rouge">lyric-view.txt</code> file.</li>
+  <li>Search for any song by passing the artist and song names (this mode does not interact with Spotify so there is no need to open it). Check the <a href="https://github.com/willamesoares/lyrics-crawler/blob/master/README.md">README.md</a>.</li>
+</ul>
+
+<p>One last thing I would like to notice is that you don’t always have to be inside the folder to get the lyrics, if you create an alias for that command in your <code class="highlighter-rouge">.bashrc</code> file.</p>
+
+<p>For me, I had to add this line to my <code class="highlighter-rouge">.bashrc</code> file.</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nb">alias </span><span class="nv">lyric</span><span class="o">=</span><span class="s2">"python ~/repos/lyrics-crawler/get-lyric.py"</span>
+</code></pre>
+</div>
+<p>And also, I had to use an absolute path for the <code class="highlighter-rouge">token.txt</code> and <code class="highlighter-rouge">lyric-view.txt</code> files in the script code.</p>
+
+<p>With that, I can simply run the command <code class="highlighter-rouge">lyric</code> from any directory and get the lyrics for the song playing via Spotify.</p>
+
+<p>I hope this was a good reading for you. If you have any suggestions or features for the repository, let me know or open a Pull Request, I’ll appreciate it :)</p>
+
+<p>Thanks!</p>
+
+      </div>
+      <div class="separator"></div>
+    </div>
+  </div>
+</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

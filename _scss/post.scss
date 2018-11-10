@@ -33,6 +33,15 @@
 
 @media (max-width: 480px) {
   .post {
+    overflow: unset;
+
+    h3 {
+      font-size: 2rem;
+    }
+
+    h4 {
+      font-size: 1.8rem;
+    }
 
     &__list,
     &__body {

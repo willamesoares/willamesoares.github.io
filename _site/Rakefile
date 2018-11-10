@@ -1,9 +1,9 @@
 require 'fileutils'
 
 namespace :draft do
-  desc "Creating a new draft for post/entry"
+  desc "Creating a new draft for post"
   task :new do
-    puts "What's the name for your next post?"
+    puts "What's the name of the post?"
     @name = STDIN.gets.chomp
     @slug = "#{@name}"
     @slug = @slug.tr('ÁáÉéÍíÓóÚú', 'AaEeIiOoUu')
@@ -21,14 +21,14 @@ namespace :draft do
     end
   end
 
-  desc "copy draft to production post!"
+  desc "Copy draft to production post"
   task :ready do
     puts "Posts in _drafts:"
     Dir.foreach("_drafts") do |fname|
       next if fname == '.' or fname == '..' or fname == '.keep'
       puts fname
     end
-    puts "what's the name of the draft to post?"
+    puts "What's the name of the draft to post?"
     @post_name = STDIN.gets.chomp
     @post_date = Time.now.strftime("%F")
     FileUtils.mv("_drafts/#{@post_name}", "_posts/#{@post_name}")

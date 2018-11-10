@@ -1,4 +1,11 @@
 # Personal blog
 
 Available at http://willamesoares.com  
-Powered by Jekyll
+<small>Powered by Jekyll</small>
+
+## Development
+
+Install Docker and Docker Compose and run
+```bash
+$ docker-compose up
+```
